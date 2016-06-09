@@ -1,0 +1,52 @@
+{
+  "name": "listr",
+  "version": "0.0.0",
+  "description": "Terminal task list",
+  "license": "MIT",
+  "repository": "SamVerschueren/listr",
+  "author": {
+    "name": "Sam Verschueren",
+    "email": "sam.verschueren@gmail.com",
+    "url": "github.com/SamVerschueren"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "clinton && xo && ava"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "keywords": [
+    "cli",
+    "task",
+    "list",
+    "tasklist",
+    "terminal",
+    "term",
+    "console",
+    "ascii",
+    "unicode",
+    "loading",
+    "indicator",
+    "progress",
+    "busy",
+    "wait",
+    "idle"
+  ],
+  "dependencies": {
+    "log-symbols": "^1.0.2",
+    "log-update": "^1.0.2",
+    "ora": "^0.2.3"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "clinton": "*",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true
+  }
+}
