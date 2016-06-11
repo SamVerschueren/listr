@@ -29,6 +29,8 @@ class Listr {
 		}
 
 		this._tasks.push(task);
+
+		return this;
 	}
 
 	run() {

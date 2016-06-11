@@ -59,3 +59,11 @@ test('execute tasks', t => {
 
 	t.notThrows(list.run());
 });
+
+test('add tasks', t => {
+	const list = new Listr()
+		.addTask({message: 'foo', task: () => {}})
+		.addTask({message: 'bar', task: () => {}});
+
+	t.is(list._tasks.length, 2);
+});

@@ -64,6 +64,8 @@ Task function.
 
 #### addTask(task)
 
+Returns the instance.
+
 ##### task
 
 Type: `object[]`
