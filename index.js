@@ -1,6 +1,6 @@
 'use strict';
+const Task = require('./lib/task');
 const Renderer = require('./lib/renderer');
-const state = require('./lib/state');
 
 class Listr {
 
@@ -16,19 +16,7 @@ class Listr {
 	}
 
 	addTask(task) {
-		if (!task) {
-			throw new TypeError('Expected a task');
-		}
-
-		if (typeof task.message !== 'string') {
-			throw new TypeError(`Expected property \`message\` of type \`string\` but got \`${typeof task.message}\``);
-		}
-
-		if (typeof task.task !== 'function') {
-			throw new TypeError(`Expected property \`task\` of type \`function\` but got \`${typeof task.task}\``);
-		}
-
-		this._tasks.push(task);
+		this._tasks.push(new Task(task));
 
 		return this;
 	}
@@ -37,22 +25,7 @@ class Listr {
 		this._renderer = new Renderer(this._tasks);
 		this._renderer.render();
 
-		function wrap(task) {
-			return Promise.resolve()
-				.then(() => {
-					task.state = state.PENDING;
-					return task.task();
-				})
-				.then(() => {
-					task.state = state.COMPLETED;
-				})
-				.catch(err => {
-					task.state = state.FAILED;
-					throw err;
-				});
-		}
-
-		return this._tasks.reduce((promise, task) => promise.then(() => wrap(task)), Promise.resolve())
+		return this._tasks.reduce((promise, task) => promise.then(() => task.run()), Promise.resolve())
 			.then(() => {
 				this._renderer.end();
 			})
