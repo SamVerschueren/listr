@@ -19,11 +19,11 @@ const Listr = require('listr');
 
 const tasks = new Listr([
 	{
-		message: 'Git',
+		title: 'Git',
 		task: () => {
 			return new Listr([
 				{
-					message: 'Checking git status',
+					title: 'Checking git status',
 					task: () => execa.stdout('git', ['status', '--porcelain']).then(result => {
 						if (result !== '') {
 							throw new Error('Unclean working tree. Commit or stash changes first.');
@@ -31,7 +31,7 @@ const tasks = new Listr([
 					});
 				},
 				{
-					message: 'Checking remote history',
+					title: 'Checking remote history',
 					task: () => execa.stdout('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD']).then(result => {
 						if (result !== '0') {
 							throw new Error('Remote history differ. Please pull changes.');
@@ -42,15 +42,15 @@ const tasks = new Listr([
 		}
 	},
 	{
-		message: 'Install package dependencies',
+		title: 'Install package dependencies',
 		task: () => execa('npm', ['install'])
 	},
 	{
-		message: 'Run tests',
+		title: 'Run tests',
 		task: () => execa('npm', ['test'])
 	},
 	{
-		message: 'Publish package',
+		title: 'Publish package',
 		task: () => execa('npm', ['publish'])
 	}
 ]);
@@ -71,11 +71,11 @@ Type: `object[]`
 
 List of tasks.
 
-##### message
+##### title
 
 Type: `string`
 
-Message of the task.
+Title of the task.
 
 ##### task
 

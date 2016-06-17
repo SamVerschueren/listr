@@ -3,11 +3,11 @@ const Listr = require('./');
 
 const tasks = new Listr([
 	{
-		message: 'Git',
+		title: 'Git',
 		task: () => {
 			return new Listr([
 				{
-					message: 'Checking git status',
+					title: 'Checking git status',
 					task: () => {
 						return new Promise(resolve => {
 							setTimeout(resolve, 2000);
@@ -15,7 +15,7 @@ const tasks = new Listr([
 					}
 				},
 				{
-					message: 'Checking remote history',
+					title: 'Checking remote history',
 					task: () => {
 						return new Promise(resolve => {
 							setTimeout(resolve, 2000);
@@ -26,7 +26,7 @@ const tasks = new Listr([
 		}
 	},
 	{
-		message: 'Install npm dependencies',
+		title: 'Install npm dependencies',
 		task: () => {
 			return new Promise(resolve => {
 				setTimeout(resolve, 2000);
@@ -34,7 +34,7 @@ const tasks = new Listr([
 		}
 	},
 	{
-		message: 'Run tests',
+		title: 'Run tests',
 		task: () => {
 			return new Promise(resolve => {
 				setTimeout(resolve, 3000);
@@ -42,7 +42,7 @@ const tasks = new Listr([
 		}
 	},
 	{
-		message: 'Publish package',
+		title: 'Publish package',
 		task: () => {
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
