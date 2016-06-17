@@ -37,6 +37,9 @@
     "idle"
   ],
   "dependencies": {
+    "chalk": "^1.1.3",
+    "figures": "^1.7.0",
+    "indent-string": "^2.1.0",
     "log-symbols": "^1.0.2",
     "log-update": "^1.0.2",
     "ora": "^0.2.3"
