@@ -2,7 +2,7 @@
 
 > Terminal task list
 
-<img src="screenshot.gif" width="492">
+<img src="screenshot.gif" width="627">
 
 ## Install
 
