@@ -54,5 +54,10 @@
   },
   "xo": {
     "esnext": true
+  },
+  "clinton": {
+    "rules": {
+      "editorconfig": "off"
+    }
   }
 }
