@@ -40,13 +40,16 @@
     "chalk": "^1.1.3",
     "figures": "^1.7.0",
     "indent-string": "^2.1.0",
+    "is-stream": "^1.1.0",
     "log-symbols": "^1.0.2",
     "log-update": "^1.0.2",
-    "ora": "^0.2.3"
+    "ora": "^0.2.3",
+    "stream-to-observable": "^0.1.0"
   },
   "devDependencies": {
     "ava": "*",
     "clinton": "*",
+    "rxjs": "^5.0.0-beta.9",
     "xo": "*"
   },
   "xo": {
