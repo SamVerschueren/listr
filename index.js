@@ -13,16 +13,19 @@ class Listr {
 		this._tasks = [];
 		this.level = 0;
 
-		tasks = tasks || [];
-		tasks.forEach(this.addTask.bind(this));
+		this.add(tasks || []);
 	}
 
 	setRenderer(renderer) {
 		this._RendererClass = renderer;
 	}
 
-	addTask(task) {
-		this._tasks.push(new Task(this, task));
+	add(task) {
+		const tasks = Array.isArray(task) ? task : [task];
+
+		for (const task of tasks) {
+			this._tasks.push(new Task(this, task));
+		}
 
 		return this;
 	}

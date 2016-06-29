@@ -159,15 +159,15 @@ Task function.
 
 ### Instance
 
-#### addTask(task)
+#### add(task)
 
 Returns the instance.
 
 ##### task
 
-Type: `object[]`
+Type: `object` `object[]`
 
-Task object.
+Task object or multiple task objects.
 
 #### run()
 
