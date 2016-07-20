@@ -73,25 +73,29 @@ test('add tasks', t => {
 });
 
 test('skip tasks', t => {
-	t.plan(4);
+	t.plan(5);
 
 	const list = new Listr([
-		{title: 'Task 1', task: () => t.pass() || '1'},
+		{
+			title: 'Task 1',
+			task: () => new Listr([
+				{title: 'Task 1.1', task: () => t.pass() || '1.1'},
+				{title: 'Task 1.2', task: () => t.pass() || '1.2'}
+			])
+		},
 		{
 			title: 'Task 2',
-			task: () => {
-				return new Listr([
-					{title: 'Task 2.1', task: () => t.pass() || '2.1'},
-					{
-						title: 'Task 2.2',
-						task: task => {
-							task.skip('Skipping sub task');
-							t.fail('Skipping should abort execution of the task');
-						}
-					},
-					{title: 'Task 2.3', task: () => t.pass() || '2.2'}
-				]);
-			}
+			task: () => new Listr([
+				{title: 'Task 2.1', task: () => t.pass() || '2.1'},
+				{
+					title: 'Task 2.2',
+					task: task => {
+						task.skip('Skipping sub task');
+						t.fail('Skipping should abort execution of the task');
+					}
+				},
+				{title: 'Task 2.3', task: () => t.pass() || '2.2'}
+			])
 		},
 		{
 			title: 'Task 3',
