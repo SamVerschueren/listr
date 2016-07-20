@@ -49,19 +49,6 @@ test('throw error if task throws', t => {
 	t.throws(list.run(), 'foo bar');
 });
 
-test('swallows error if task skipped', t => {
-	const list = new Listr([
-		{
-			title: 'foo',
-			task: task => {
-				task.skip('foo bar');
-			}
-		}
-	]);
-
-	t.notThrows(list.run());
-});
-
 test('execute tasks', t => {
 	const list = new Listr([
 		{
@@ -83,4 +70,38 @@ test('add tasks', t => {
 		.add({title: 'bar', task: () => {}});
 
 	t.is(list._tasks.length, 4);
+});
+
+test('skip tasks', t => {
+	t.plan(4);
+
+	const list = new Listr([
+		{title: 'Task 1', task: () => t.pass() || '1'},
+		{
+			title: 'Task 2',
+			task: () => {
+				return new Listr([
+					{title: 'Task 2.1', task: () => t.pass() || '2.1'},
+					{
+						title: 'Task 2.2',
+						task: task => {
+							task.skip('Skipping sub task');
+							t.fail('Skipping should abort execution of the task');
+						}
+					},
+					{title: 'Task 2.3', task: () => t.pass() || '2.2'}
+				]);
+			}
+		},
+		{
+			title: 'Task 3',
+			task: task => {
+				task.skip('Skipping task');
+				t.fail('Skipping should abort execution of the task');
+			}
+		},
+		{title: 'Task 4', task: () => t.pass() || '4'}
+	]);
+
+	return list.run();
 });
