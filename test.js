@@ -5,8 +5,19 @@ test('create', t => {
 	t.notThrows(() => new Listr());
 	t.throws(() => new Listr('foo'), 'Expected an array of tasks');
 
-	const list = new Listr([{title: 'foo', task: () => {}}]);
+	let list;
+
+	list = new Listr([{title: 'foo', task: () => {}}]);
 	t.is(list._tasks.length, 1);
+	t.true(list._options.showSubtasks);
+
+	list = new Listr({showSubtasks: false});
+	t.is(list._tasks.length, 0);
+	t.false(list._options.showSubtasks);
+
+	list = new Listr([{title: 'foo', task: () => {}}], {showSubtasks: false});
+	t.is(list._tasks.length, 1);
+	t.false(list._options.showSubtasks);
 });
 
 test('throw error if task properties are wrong', t => {

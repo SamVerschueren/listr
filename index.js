@@ -4,13 +4,22 @@ const CLIRenderer = require('./lib/renderer').CLIRenderer;
 
 class Listr {
 
-	constructor(tasks) {
+	constructor(tasks, opts) {
+		if (tasks && !Array.isArray(tasks) && typeof tasks === 'object') {
+			opts = tasks;
+			tasks = [];
+		}
+
 		if (tasks && !Array.isArray(tasks)) {
 			throw new TypeError('Expected an array of tasks');
 		}
 
 		this._RendererClass = CLIRenderer;
 		this._tasks = [];
+		this._options = Object.assign({
+			showSubtasks: true
+		}, opts);
+
 		this.level = 0;
 
 		this.add(tasks || []);
@@ -24,7 +33,7 @@ class Listr {
 		const tasks = Array.isArray(task) ? task : [task];
 
 		for (const task of tasks) {
-			this._tasks.push(new Task(this, task));
+			this._tasks.push(new Task(this, task, this._options));
 		}
 
 		return this;

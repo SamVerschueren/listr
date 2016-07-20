@@ -137,7 +137,7 @@ It's also possible to return a `stream`. The stream will be converted to an `Obs
 
 ## API
 
-### Listr([tasks])
+### Listr([tasks], [options])
 
 #### tasks
 
@@ -156,6 +156,16 @@ Title of the task.
 Type: `Function`
 
 Task function.
+
+#### options
+
+##### showSubtasks
+
+Type: `boolean`<br>
+Default: `true`
+
+Set to `false` if you want to disable the rendering of the subtasks. Subtasks will be rendered if
+an error occurred in one of them.
 
 ### Instance
 
