@@ -135,6 +135,37 @@ const tasks = new Listr([
 It's also possible to return a `stream`. The stream will be converted to an `Observable` and handled as such.
 
 
+#### Skipping tasks
+
+<img src="media/skipped.png" width="255" align="right">
+
+At any point during execution a task can be skipped by invoking the `skip()` function on the task instance passed in to the task function.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Task 1',
+		task: () => Promise.resolve('Foo')
+	},
+	{
+		title: 'Can be skipped',
+		task: task => {
+			if (someCondition) {
+				task.skip('Reason for skipping');
+			}
+			// If task is skipped this code won't run
+			return 'Bar';
+		}
+	},
+	{
+		title: 'Task 3',
+		task: () => Promise.resolve('Bar')
+	}
+]);
+```
+
+
+
 ## API
 
 ### Listr([tasks])
@@ -172,6 +203,14 @@ Task object or multiple task objects.
 #### run()
 
 Start executing the tasks.
+
+### Task Instance
+
+Passed in to a task function.
+
+#### skip(reason)
+
+Skip the current task, optionally specifying a reason.
 
 
 ## Related
