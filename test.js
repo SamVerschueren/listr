@@ -49,6 +49,19 @@ test('throw error if task throws', t => {
 	t.throws(list.run(), 'foo bar');
 });
 
+test('swallows error if task skipped', t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: task => {
+				task.skip('foo bar');
+			}
+		}
+	]);
+
+	t.notThrows(list.run());
+});
+
 test('execute tasks', t => {
 	const list = new Listr([
 		{
