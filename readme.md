@@ -167,6 +167,13 @@ Default: `true`
 Set to `false` if you want to disable the rendering of the subtasks. Subtasks will be rendered if
 an error occurred in one of them.
 
+##### concurrent
+
+Type: `boolean`<br>
+Default: `false`
+
+Set to `true` if you want tasks to run concurrently.
+
 ### Instance
 
 #### add(task)

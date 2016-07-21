@@ -17,7 +17,8 @@ class Listr {
 		this._RendererClass = CLIRenderer;
 		this._tasks = [];
 		this._options = Object.assign({
-			showSubtasks: true
+			showSubtasks: true,
+			concurrent: false
 		}, opts);
 
 		this.level = 0;
@@ -50,7 +51,14 @@ class Listr {
 	run() {
 		this.render();
 
-		return this._tasks.reduce((promise, task) => promise.then(() => task.run()), Promise.resolve())
+		let tasks;
+		if (this._options.concurrent === true) {
+			tasks = Promise.all(this._tasks.map(task => task.run()));
+		} else {
+			tasks = this._tasks.reduce((promise, task) => promise.then(() => task.run()), Promise.resolve());
+		}
+
+		return tasks
 			.then(() => {
 				this._renderer.end();
 			})
