@@ -10,14 +10,17 @@ test('create', t => {
 	list = new Listr([{title: 'foo', task: () => {}}]);
 	t.is(list._tasks.length, 1);
 	t.true(list._options.showSubtasks);
+	t.false(list._options.concurrent);
 
-	list = new Listr({showSubtasks: false});
+	list = new Listr({showSubtasks: false, concurrent: true});
 	t.is(list._tasks.length, 0);
 	t.false(list._options.showSubtasks);
+	t.true(list._options.concurrent);
 
-	list = new Listr([{title: 'foo', task: () => {}}], {showSubtasks: false});
+	list = new Listr([{title: 'foo', task: () => {}}], {showSubtasks: false, concurrent: true});
 	t.is(list._tasks.length, 1);
 	t.false(list._options.showSubtasks);
+	t.true(list._options.concurrent);
 });
 
 test('throw error if task properties are wrong', t => {

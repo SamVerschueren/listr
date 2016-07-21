@@ -33,7 +33,7 @@ const tasks = new Listr([
 						});
 					}
 				}
-			]);
+			], {concurrent: true});
 		}
 	},
 	{
