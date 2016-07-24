@@ -87,18 +87,20 @@ test('add tasks', t => {
 });
 
 test('skip tasks', async t => {
+	t.plan(5); // Helps ensure non-skipped tasks are still executed
+
 	const list = new Listr([
 		{
 			title: 'Task 1',
 			task: () => new Listr([
-				{title: 'Task 1.1', task: () => t.pass() || '1.1'},
-				{title: 'Task 1.2', task: () => t.pass() || '1.2'}
+				{title: 'Task 1.1', task: () => t.pass()},
+				{title: 'Task 1.2', task: () => t.pass()}
 			])
 		},
 		{
 			title: 'Task 2',
 			task: () => new Listr([
-				{title: 'Task 2.1', task: () => t.pass() || '2.1'},
+				{title: 'Task 2.1', task: () => t.pass()},
 				{
 					title: 'Task 2.2',
 					skip: () => 'Skipping sub task',
@@ -107,7 +109,7 @@ test('skip tasks', async t => {
 				{
 					title: 'Task 2.3',
 					skip: () => false,
-					task: () => t.pass() || '2.2'
+					task: () => t.pass()
 				}
 			])
 		},
@@ -119,7 +121,7 @@ test('skip tasks', async t => {
 		{
 			title: 'Task 4',
 			skip: () => Promise.resolve(false),
-			task: () => t.pass() || '4'
+			task: () => t.pass()
 		}
 	]);
 
