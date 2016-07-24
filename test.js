@@ -86,9 +86,7 @@ test('add tasks', t => {
 	t.is(list._tasks.length, 4);
 });
 
-test('skip tasks', t => {
-	t.plan(5);
-
+test('skip tasks', async t => {
 	const list = new Listr([
 		{
 			title: 'Task 1',
@@ -125,5 +123,5 @@ test('skip tasks', t => {
 		}
 	]);
 
-	return list.run();
+	await list.run();
 });
