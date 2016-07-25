@@ -139,7 +139,12 @@ It's also possible to return a `stream`. The stream will be converted to an `Obs
 
 <img src="media/skipped.png" width="255" align="right">
 
-Optionally specify a `skip` function to determine whether a task can be skipped. If the `skip` function returns a truthy value or a `Promise` that resolves to a truthy value then the task will be skipped. If the returned value is a string it will be displayed as the reason for skipping the task.
+Optionally specify a `skip` function to determine whether a task can be skipped.
+
+- If the `skip` function returns a truthy value or a `Promise` that resolves to a truthy value then the task will be skipped.
+- If the returned value is a string it will be displayed as the reason for skipping the task.
+- If the `skip` function returns a falsey value or a `Promise` that resolves to a falsey value then the task will be executed as normal.
+- If the `skip` function throws or returns a `Promise` that rejects, the task (and the whole build) will fail.
 
 ```js
 const tasks = new Listr([
@@ -191,7 +196,7 @@ Task function.
 
 Type: `Function`
 
-Skip function.
+Skip function. Read more about [skipping tasks](#skipping-tasks).
 
 #### options
 
