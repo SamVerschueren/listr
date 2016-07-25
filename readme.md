@@ -38,7 +38,7 @@ const tasks = new Listr([
 						}
 					});
 				}
-			]);
+			], {concurrent: true});
 		}
 	},
 	{
@@ -100,7 +100,7 @@ const tasks = new Listr([
 
 #### Observable
 
-<img src="media/observable.gif" width="255" align="right">
+<img src="media/observable.gif" width="250" align="right">
 
 A `task` can also return an `Observable`. The thing about observables is that it can emit multiple values and can be used to show the output of the
 task. Please note that only the last line of the output is rendered.
@@ -137,7 +137,7 @@ It's also possible to return a `stream`. The stream will be converted to an `Obs
 
 #### Skipping tasks
 
-<img src="media/skipped.png" width="255" align="right">
+<img src="media/skipped.png" width="250" align="right">
 
 Optionally specify a `skip` function to determine whether a task can be skipped.
 
