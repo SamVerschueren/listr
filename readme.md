@@ -150,10 +150,9 @@ const tasks = new Listr([
 	{
 		title: 'Can be skipped',
 		skip: () => {
-			if (someCondition) {
+			if (Math.random() > 0.5) {
 				return 'Reason for skipping';
 			}
-			return false;
 		},
 		task: () => 'Bar'
 	},
