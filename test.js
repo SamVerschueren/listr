@@ -119,13 +119,30 @@ test('continue execution if skip() returns false or Promise for false', async t 
 		{
 			title: 'Task 1',
 			task: () => new Listr([
-				{title: 'Task 1.1', task: () => t.pass()},
-				{title: 'Task 1.2', skip: () => false, task: () => t.pass()},
-				{title: 'Task 1.3', task: () => t.pass()}
+				{
+					title: 'Task 1.1',
+					task: () => t.pass()
+				},
+				{
+					title: 'Task 1.2',
+					skip: () => false,
+					task: () => t.pass()
+				},
+				{
+					title: 'Task 1.3',
+					task: () => t.pass()
+				}
 			])
 		},
-		{title: 'Task 2', skip: () => Promise.resolve(false), task: () => t.pass()},
-		{title: 'Task 3', task: () => t.pass()}
+		{
+			title: 'Task 2',
+			skip: () => Promise.resolve(false),
+			task: () => t.pass()
+		},
+		{
+			title: 'Task 3',
+			task: () => t.pass()
+		}
 	]);
 
 	await list.run();
@@ -138,13 +155,30 @@ test('skip task if skip() returns true or Promise for true', async t => {
 		{
 			title: 'Task 1',
 			task: () => new Listr([
-				{title: 'Task 1.1', task: () => t.pass()},
-				{title: 'Task 1.2', skip: () => true, task: () => t.fail('Skipped task should not be executed')},
-				{title: 'Task 1.3', task: () => t.pass()}
+				{
+					title: 'Task 1.1',
+					task: () => t.pass()
+				},
+				{
+					title: 'Task 1.2',
+					skip: () => true,
+					task: () => t.fail('Skipped task should not be executed')
+				},
+				{
+					title: 'Task 1.3',
+					task: () => t.pass()
+				}
 			])
 		},
-		{title: 'Task 2', skip: () => Promise.resolve(true), task: () => t.fail('Skipped task should not be executed')},
-		{title: 'Task 3', task: () => t.pass()}
+		{
+			title: 'Task 2',
+			skip: () => Promise.resolve(true),
+			task: () => t.fail('Skipped task should not be executed')
+		},
+		{
+			title: 'Task 3',
+			task: () => t.pass()
+		}
 	]);
 
 	await list.run();
@@ -157,13 +191,30 @@ test('skip task with custom reason if skip() returns string or Promise for strin
 		{
 			title: 'Task 1',
 			task: () => new Listr([
-				{title: 'Task 1.1', task: () => t.pass()},
-				{title: 'Task 1.2', skip: () => 'skip', task: () => t.fail('Skipped task should not be executed')},
-				{title: 'Task 1.3', task: () => t.pass()}
+				{
+					title: 'Task 1.1',
+					task: () => t.pass()
+				},
+				{
+					title: 'Task 1.2',
+					skip: () => 'skip',
+					task: () => t.fail('Skipped task should not be executed')
+				},
+				{
+					title: 'Task 1.3',
+					task: () => t.pass()
+				}
 			])
 		},
-		{title: 'Task 2', skip: () => Promise.resolve('skip'), task: () => t.fail('Skipped task should not be executed')},
-		{title: 'Task 3', task: () => t.pass()}
+		{
+			title: 'Task 2',
+			skip: () => Promise.resolve('skip'),
+			task: () => t.fail('Skipped task should not be executed')
+		},
+		{
+			title: 'Task 3',
+			task: () => t.pass()
+		}
 	]);
 
 	await list.run();
