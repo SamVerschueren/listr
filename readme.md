@@ -63,7 +63,7 @@ tasks.run().catch(err => {
 
 ### Task
 
-A `task` can return different values. If a `task` returns, it means the task was completed succesfully. If a task throws an error, the task failed.
+A `task` can return different values. If a `task` returns, it means the task was completed successfully. If a task throws an error, the task failed.
 
 ```js
 const tasks = new Listr([
@@ -83,7 +83,7 @@ const tasks = new Listr([
 
 #### Promises
 
-A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed sucessfully, it it rejects, the task failed.
+A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, it it rejects, the task failed.
 
 ```js
 const tasks = new Listr([
@@ -135,6 +135,41 @@ const tasks = new Listr([
 It's also possible to return a `stream`. The stream will be converted to an `Observable` and handled as such.
 
 
+#### Skipping tasks
+
+<img src="media/skipped.png" width="255" align="right">
+
+Optionally specify a `skip` function to determine whether a task can be skipped.
+
+- If the `skip` function returns a truthy value or a `Promise` that resolves to a truthy value then the task will be skipped.
+- If the returned value is a string it will be displayed as the reason for skipping the task.
+- If the `skip` function returns a falsey value or a `Promise` that resolves to a falsey value then the task will be executed as normal.
+- If the `skip` function throws or returns a `Promise` that rejects, the task (and the whole build) will fail.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Task 1',
+		task: () => Promise.resolve('Foo')
+	},
+	{
+		title: 'Can be skipped',
+		skip: () => {
+			if (Math.random() > 0.5) {
+				return 'Reason for skipping';
+			}
+		},
+		task: () => 'Bar'
+	},
+	{
+		title: 'Task 3',
+		task: () => Promise.resolve('Bar')
+	}
+]);
+```
+
+
+
 ## API
 
 ### Listr([tasks], [options])
@@ -156,6 +191,12 @@ Title of the task.
 Type: `Function`
 
 Task function.
+
+##### skip
+
+Type: `Function`
+
+Skip function. Read more about [skipping tasks](#skipping-tasks).
 
 #### options
 
