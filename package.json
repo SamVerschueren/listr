@@ -52,6 +52,7 @@
   "devDependencies": {
     "ava": "*",
     "clinton": "*",
+    "delay": "^1.3.1",
     "rxjs": "^5.0.0-beta.9",
     "xo": "*"
   },
