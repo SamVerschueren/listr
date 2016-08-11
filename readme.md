@@ -28,7 +28,7 @@ const tasks = new Listr([
 						if (result !== '') {
 							throw new Error('Unclean working tree. Commit or stash changes first.');
 						}
-					});
+					})
 				},
 				{
 					title: 'Checking remote history',
@@ -36,7 +36,7 @@ const tasks = new Listr([
 						if (result !== '0') {
 							throw new Error('Remote history differ. Please pull changes.');
 						}
-					});
+					})
 				}
 			], {concurrent: true});
 		}
@@ -89,7 +89,7 @@ A `task` can also be async by returning a `Promise`. If the promise resolves, th
 const tasks = new Listr([
 	{
 		title: 'Success',
-		task: () => Promise.resolve('Foo');
+		task: () => Promise.resolve('Foo')
 	},
 	{
 		title: 'Failure',
