@@ -4,6 +4,8 @@ const logSymbols = require('log-symbols');
 const delay = require('delay');
 const Listr = require('./');
 
+const renderer = process.argv[2];
+
 const tasks = new Listr([
 	{
 		title: 'Git',
@@ -60,7 +62,9 @@ const tasks = new Listr([
 			throw new Error('Package name already exists');
 		})
 	}
-]);
+], {
+	renderer
+});
 
 tasks.run().catch(err => {
 	console.error(err.message);

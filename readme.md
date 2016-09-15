@@ -61,7 +61,7 @@ tasks.run().catch(err => {
 ```
 
 
-### Task
+## Task
 
 A `task` can return different values. If a `task` returns, it means the task was completed successfully. If a task throws an error, the task failed.
 
@@ -81,7 +81,7 @@ const tasks = new Listr([
 ```
 
 
-#### Promises
+### Promises
 
 A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, it it rejects, the task failed.
 
@@ -98,7 +98,7 @@ const tasks = new Listr([
 ]);
 ```
 
-#### Observable
+### Observable
 
 <img src="media/observable.gif" width="250" align="right">
 
@@ -130,12 +130,12 @@ const tasks = new Listr([
 ]);
 ```
 
-#### Streams
+### Streams
 
 It's also possible to return a `stream`. The stream will be converted to an `Observable` and handled as such.
 
 
-#### Skipping tasks
+### Skipping tasks
 
 <img src="media/skipped.png" width="250" align="right">
 
@@ -169,6 +169,61 @@ const tasks = new Listr([
 ```
 
 
+## Custom renderers
+
+It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should renderer, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
+
+```js
+class CustomRenderer {
+
+	constructor(tasks, options) { }
+
+	render() { }
+
+	end(err) { }
+}
+
+module.exports = CustomRenderer;
+```
+
+> Note: A renderer is not passed through to the subtasks, only to the main task. It is up to you to handle that case.
+
+### Observables
+
+Every task is an observable. The task emits three different events and every event is an object with a `type` property.
+
+1. The state of the task has changed (`STATE`).
+2. The task outputted data (`DATA`).
+3. The task returns a subtask list (`SUBTASKS`).
+
+This allows you to flexibly build up your UI. Let's render every task that starts executing.
+
+```js
+class CustomRenderer {
+
+	constructor(tasks, options) {
+		this._tasks = tasks;
+		this._options = Object.assign({}, options);
+	}
+
+	render() {
+		for (const task of this._tasks) {
+			task.subscribe(event => {
+				if (event.type === 'STATE' && task.isPending()) {
+					console.log(`${task.title} [started]`);
+				}
+			});
+		}
+	}
+
+	end(err) { }
+}
+
+module.exports = CustomRenderer;
+```
+
+If you want more complex examples, take a look at the [update](https://github.com/SamVerschueren/listr-update-renderer) and [verbose](https://github.com/SamVerschueren/listr-verbose-renderer) renderers.
+
 
 ## API
 
@@ -200,13 +255,7 @@ Skip function. Read more about [skipping tasks](#skipping-tasks).
 
 #### options
 
-##### showSubtasks
-
-Type: `boolean`<br>
-Default: `true`
-
-Set to `false` if you want to disable the rendering of the subtasks. Subtasks will be rendered if
-an error occurred in one of them.
+Any renderer specific options.
 
 ##### concurrent
 
@@ -214,6 +263,14 @@ Type: `boolean`<br>
 Default: `false`
 
 Set to `true` if you want tasks to run concurrently.
+
+##### renderer
+
+Type: `string` `object`<br>
+Default: `default`<br>
+Options: `default` `verbose` `silent`
+
+Renderer that should be used. You can either pass in the name of the known renderer, or a class of a custom renderer.
 
 ### Instance
 
