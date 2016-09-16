@@ -5,17 +5,17 @@ import Listr from '../';
 import {isListr, isObservable} from '../lib/util';
 
 test('isListr', t => {
-	t.falsy(isListr(null));
-	t.falsy(isListr({}));
-	t.falsy(isListr(() => {}));
-	t.truthy(isListr(new Listr([])));
+	t.false(isListr(null));
+	t.false(isListr({}));
+	t.false(isListr(() => {}));
+	t.true(isListr(new Listr([])));
 });
 
 test('isObservable', t => {
-	t.falsy(isObservable(null));
-	t.falsy(isObservable({}));
-	t.falsy(isObservable(new Listr([])));
-	t.falsy(isObservable(new Promise(() => {})));
-	t.truthy(isObservable(new RxObservable(() => {})));
-	t.truthy(isObservable(new ZenObservable(() => {})));
+	t.false(isObservable(null));
+	t.false(isObservable({}));
+	t.false(isObservable(new Listr([])));
+	t.false(isObservable(new Promise(() => {})));
+	t.true(isObservable(new RxObservable(() => {})));
+	t.true(isObservable(new ZenObservable(() => {})));
 });
