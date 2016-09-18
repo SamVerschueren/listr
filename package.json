@@ -1,6 +1,6 @@
 {
   "name": "listr",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Terminal task list",
   "license": "MIT",
   "repository": "SamVerschueren/listr",
