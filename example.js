@@ -1,7 +1,10 @@
 'use strict';
 const Observable = require('rxjs/Observable').Observable;
 const logSymbols = require('log-symbols');
+const delay = require('delay');
 const Listr = require('./');
+
+const renderer = process.argv[2];
 
 const tasks = new Listr([
 	{
@@ -14,63 +17,54 @@ const tasks = new Listr([
 						return new Observable(observer => {
 							observer.next('foo');
 
-							setTimeout(() => {
-								observer.next('bar');
-							}, 2000);
-
-							setTimeout(() => {
-								observer.next('bar');
-								observer.complete();
-							}, 4000);
+							delay(2000)
+								.then(() => {
+									observer.next(`bar`);
+									return delay(2000);
+								})
+								.then(() => {
+									observer.complete();
+								});
 						});
 					}
 				},
 				{
 					title: 'Checking remote history',
-					task: () => {
-						return new Promise(resolve => {
-							setTimeout(resolve, 2000);
-						});
-					}
+					task: () => delay(2000)
 				}
 			], {concurrent: true});
 		}
 	},
 	{
 		title: 'Install npm dependencies',
-		task: () => {
-			return new Promise(resolve => {
-				setTimeout(resolve, 2000);
-			});
-		}
+		task: () => delay(2000)
 	},
 	{
 		title: 'Run tests',
-		task: () => {
+		task: () => delay(2000).then(() => {
 			return new Observable(observer => {
 				observer.next('clinton && xo && ava');
 
-				setTimeout(() => {
-					observer.next(`${logSymbols.success} 7 passed`);
-				}, 2000);
-
-				setTimeout(() => {
-					observer.complete();
-				}, 4000);
+				delay(2000)
+					.then(() => {
+						observer.next(`${logSymbols.success} 7 passed`);
+						return delay(2000);
+					})
+					.then(() => {
+						observer.complete();
+					});
 			});
-		}
+		})
 	},
 	{
 		title: 'Publish package',
-		task: () => {
-			return new Promise((resolve, reject) => {
-				setTimeout(() => {
-					reject(new Error('Package name already exists'));
-				}, 1000);
-			});
-		}
+		task: () => delay(1000).then(() => {
+			throw new Error('Package name already exists');
+		})
 	}
-]);
+], {
+	renderer
+});
 
 tasks.run().catch(err => {
 	console.error(err.message);

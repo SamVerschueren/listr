@@ -1,6 +1,14 @@
 'use strict';
 const Task = require('./lib/task');
-const CLIRenderer = require('./lib/renderer').CLIRenderer;
+const renderers = require('./lib/renderer');
+
+const getRenderer = renderer => {
+	if (typeof renderer === 'string') {
+		return renderers[renderer] || renderers.default;
+	}
+
+	return renderer || renderers.default;
+};
 
 class Listr {
 
@@ -14,16 +22,19 @@ class Listr {
 			throw new TypeError('Expected an array of tasks');
 		}
 
-		this._RendererClass = CLIRenderer;
-		this._tasks = [];
 		this._options = Object.assign({
 			showSubtasks: true,
-			concurrent: false
+			concurrent: false,
+			renderer: 'default'
 		}, opts);
-
-		this.level = 0;
+		this._tasks = [];
+		this._RendererClass = getRenderer(this._options.renderer);
 
 		this.add(tasks || []);
+	}
+
+	get tasks() {
+		return this._tasks;
 	}
 
 	setRenderer(renderer) {
@@ -42,7 +53,7 @@ class Listr {
 
 	render() {
 		if (!this._renderer) {
-			this._renderer = new this._RendererClass(this._tasks);
+			this._renderer = new this._RendererClass(this._tasks, this._options);
 		}
 
 		return this._renderer.render();
@@ -65,9 +76,7 @@ class Listr {
 				this._renderer.end();
 			})
 			.catch(err => {
-				if (this.level === 0) {
-					this._renderer.end();
-				}
+				this._renderer.end(err);
 				throw err;
 			});
 	}

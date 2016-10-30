@@ -1,5 +1,5 @@
 import test from 'ava';
-import Listr from './';
+import Listr from '../';
 
 test('create', t => {
 	t.notThrows(() => new Listr());
@@ -45,7 +45,7 @@ test('throw error if task rejects', t => {
 			title: 'foo',
 			task: () => Promise.reject(new Error('foo bar'))
 		}
-	]);
+	], {renderer: 'silent'});
 
 	t.throws(list.run(), 'foo bar');
 });
@@ -58,9 +58,35 @@ test('throw error if task throws', t => {
 				throw new Error('foo bar');
 			}
 		}
-	]);
+	], {renderer: 'silent'});
 
 	t.throws(list.run(), 'foo bar');
+});
+
+test('throw error if task skip rejects', t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			skip: () => Promise.reject(new Error('skip foo')),
+			task: () => {}
+		}
+	], {renderer: 'silent'}, {renderer: 'silent'});
+
+	t.throws(list.run(), 'skip foo');
+});
+
+test('throw error if task skip throws', t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			skip: () => {
+				throw new Error('skip foo');
+			},
+			task: () => {}
+		}
+	], {renderer: 'silent'});
+
+	t.throws(list.run(), 'skip foo');
 });
 
 test('execute tasks', t => {
@@ -69,7 +95,7 @@ test('execute tasks', t => {
 			title: 'foo',
 			task: () => Promise.resolve('bar')
 		}
-	]);
+	], {renderer: 'silent'});
 
 	t.notThrows(list.run());
 });
