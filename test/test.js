@@ -130,3 +130,30 @@ test('context', async t => {
 
 	await list.run();
 });
+
+test('subtask context', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: () => {
+				return new Listr([
+					{
+						title: 'subfoo',
+						task: context => {
+							t.is(context.foo, 'bar');
+							context.fiz = 'biz';
+						}
+					}
+				]);
+			}
+		},
+		{
+			title: 'bar',
+			task: context => {
+				t.is(context.fiz, 'biz');
+			}
+		}
+	]);
+
+	await list.run({foo: 'bar'});
+});
