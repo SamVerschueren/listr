@@ -111,3 +111,49 @@ test('add tasks', t => {
 
 	t.is(list._tasks.length, 4);
 });
+
+test('context', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: context => {
+				context.foo = 'bar';
+			}
+		},
+		{
+			title: 'unicorn',
+			task: context => {
+				t.is(context.foo, 'bar');
+			}
+		}
+	]);
+
+	await list.run();
+});
+
+test('subtask context', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: () => {
+				return new Listr([
+					{
+						title: 'subfoo',
+						task: context => {
+							t.is(context.foo, 'bar');
+							context.fiz = 'biz';
+						}
+					}
+				]);
+			}
+		},
+		{
+			title: 'bar',
+			task: context => {
+				t.is(context.fiz, 'biz');
+			}
+		}
+	]);
+
+	await list.run({foo: 'bar'});
+});

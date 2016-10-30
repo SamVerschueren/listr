@@ -59,14 +59,16 @@ class Listr {
 		return this._renderer.render();
 	}
 
-	run() {
+	run(context) {
 		this.render();
+
+		context = context || Object.create(null);
 
 		let tasks;
 		if (this._options.concurrent === true) {
-			tasks = Promise.all(this._tasks.map(task => task.run()));
+			tasks = Promise.all(this._tasks.map(task => task.run(context)));
 		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => task.run()), Promise.resolve());
+			tasks = this._tasks.reduce((promise, task) => promise.then(() => task.run(context)), Promise.resolve());
 		}
 
 		return tasks
