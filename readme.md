@@ -173,7 +173,7 @@ const tasks = new Listr([
 
 ## Context
 
-A context object is being passed as argument into every `skip` and `task` function. This allows you to create composable tasks and to chang the behaviour of your task depending on previous results.
+A context object is being passed as argument into every `skip` and `task` function. This allows you to create composable tasks and change the behaviour of your task depending on previous results.
 
 ```js
 const tasks = new Listr([
@@ -200,7 +200,7 @@ const tasks = new Listr([
 ]);
 
 tasks.run({
-	foo: 'bar
+	foo: 'bar'
 });
 ```
 
