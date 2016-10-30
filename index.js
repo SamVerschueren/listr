@@ -62,7 +62,7 @@ class Listr {
 	run(context) {
 		this.render();
 
-		context = context || new Map();
+		context = context || Object.create(null);
 
 		let tasks;
 		if (this._options.concurrent === true) {

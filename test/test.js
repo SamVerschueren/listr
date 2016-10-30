@@ -117,13 +117,13 @@ test('context', async t => {
 		{
 			title: 'foo',
 			task: context => {
-				context.set('foo', 'bar');
+				context.foo = 'bar';
 			}
 		},
 		{
 			title: 'unicorn',
 			task: context => {
-				t.is(context.get('foo'), 'bar');
+				t.is(context.foo, 'bar');
 			}
 		}
 	]);
