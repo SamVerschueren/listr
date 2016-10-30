@@ -169,6 +169,40 @@ const tasks = new Listr([
 ```
 
 
+## Context
+
+A context object is being passed as argument into every `skip` and `task` function. This allows you to create composable tasks and to chang the behaviour of your task depending on previous results.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Task 1',
+		skip: ctx => ctx.foo === 'bar',
+		task: () => Promise.resolve('Foo')
+	},
+	{
+		title: 'Can be skipped',
+		skip: () => {
+			if (Math.random() > 0.5) {
+				return 'Reason for skipping';
+			}
+		},
+		task: ctx => {
+			ctx.unicorn = 'rainbow';
+		}
+	},
+	{
+		title: 'Task 3',
+		task: ctx => Promise.resolve(`${ctx.foo} ${ctx.bar}`)
+	}
+]);
+
+tasks.run({
+	foo: 'bar
+});
+```
+
+
 ## Custom renderers
 
 It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should renderer, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
@@ -284,9 +318,16 @@ Type: `object` `object[]`
 
 Task object or multiple task objects.
 
-#### run()
+#### run([context])
 
 Start executing the tasks.
+
+##### context
+
+Type: `object`<br>
+Default: `Object.create(null)`
+
+Initial context object.
 
 
 ## Related

@@ -130,3 +130,24 @@ test.serial('skip rendering', async t => {
 	await list.run();
 });
 
+test('skip context object', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: ctx => {
+				ctx.foo = 'bar';
+			}
+		},
+		{
+			title: 'bar',
+			skip: ctx => {
+				t.is(ctx.foo, 'bar');
+			},
+			task: ctx => {
+				t.is(ctx.foo, 'bar');
+			}
+		}
+	]);
+
+	await list.run();
+});
