@@ -1,4 +1,7 @@
-# listr [![Build Status](https://travis-ci.org/SamVerschueren/listr.svg?branch=master)](https://travis-ci.org/SamVerschueren/listr)
+# listr
+
+[![Build Status](https://travis-ci.org/SamVerschueren/listr.svg?branch=master)](https://travis-ci.org/SamVerschueren/listr)
+[![Coverage Status](https://coveralls.io/repos/SamVerschueren/listr/badge.svg?branch=master&service=github)](https://coveralls.io/github/SamVerschueren/listr?branch=master)
 
 > Terminal task list
 

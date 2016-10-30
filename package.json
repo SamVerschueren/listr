@@ -13,7 +13,8 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "clinton && xo && ava"
+    "test": "clinton && xo && nyc ava",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "files": [
     "index.js",
@@ -56,8 +57,10 @@
   "devDependencies": {
     "ava": "*",
     "clinton": "*",
+    "coveralls": "^2.11.14",
     "delay": "^1.3.1",
     "hook-std": "^0.2.0",
+    "nyc": "^8.3.2",
     "xo": "*",
     "zen-observable": "^0.3.0"
   },
