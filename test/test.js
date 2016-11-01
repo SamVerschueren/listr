@@ -128,7 +128,11 @@ test('context', async t => {
 		}
 	]);
 
-	await list.run();
+	const result = await list.run();
+
+	t.deepEqual(result, {
+		foo: 'bar'
+	});
 });
 
 test('subtask context', async t => {
@@ -155,5 +159,35 @@ test('subtask context', async t => {
 		}
 	]);
 
-	await list.run({foo: 'bar'});
+	const result = await list.run({foo: 'bar'});
+
+	t.deepEqual(result, {
+		foo: 'bar',
+		fiz: 'biz'
+	});
+});
+
+test('context is attached to error object', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: context => {
+				context.foo = 'bar';
+			}
+		},
+		{
+			title: 'unicorn',
+			task: () => Promise.reject(new Error('foo bar'))
+		}
+	]);
+
+	try {
+		await list.run();
+		t.fail('Should throw error');
+	} catch (err) {
+		t.is(err.message, 'foo bar');
+		t.deepEqual(err.context, {
+			foo: 'bar'
+		});
+	}
 });

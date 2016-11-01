@@ -74,8 +74,11 @@ class Listr {
 		return tasks
 			.then(() => {
 				this._renderer.end();
+
+				return context;
 			})
 			.catch(err => {
+				err.context = context;
 				this._renderer.end(err);
 				throw err;
 			});

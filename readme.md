@@ -201,6 +201,9 @@ const tasks = new Listr([
 
 tasks.run({
 	foo: 'bar'
+}).then(ctx => {
+	console.log(ctx);
+	//=> {foo: 'bar', unicorn: 'rainbow'}
 });
 ```
 
@@ -322,7 +325,7 @@ Task object or multiple task objects.
 
 #### run([context])
 
-Start executing the tasks.
+Start executing the tasks. Returns a `Promise` for the context object.
 
 ##### context
 
