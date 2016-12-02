@@ -1,14 +1,6 @@
 'use strict';
 const Task = require('./lib/task');
-const renderers = require('./lib/renderer');
-
-const getRenderer = renderer => {
-	if (typeof renderer === 'string') {
-		return renderers[renderer] || renderers.default;
-	}
-
-	return renderer || renderers.default;
-};
+const renderer = require('./lib/renderer');
 
 class Listr {
 
@@ -25,10 +17,11 @@ class Listr {
 		this._options = Object.assign({
 			showSubtasks: true,
 			concurrent: false,
-			renderer: 'default'
+			renderer: 'default',
+			nonTTYRenderer: 'verbose'
 		}, opts);
 		this._tasks = [];
-		this._RendererClass = getRenderer(this._options.renderer);
+		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
 
 		this.add(tasks || []);
 	}
@@ -37,8 +30,8 @@ class Listr {
 		return this._tasks;
 	}
 
-	setRenderer(renderer) {
-		this._RendererClass = renderer;
+	setRenderer(value) {
+		this._RendererClass = renderer.getRenderer(value);
 	}
 
 	add(task) {

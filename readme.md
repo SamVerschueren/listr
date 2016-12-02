@@ -217,6 +217,10 @@ class CustomRenderer {
 
 	constructor(tasks, options) { }
 
+	static get nonTTY() {
+		return false;
+	}
+
 	render() { }
 
 	end(err) { }
@@ -226,6 +230,8 @@ module.exports = CustomRenderer;
 ```
 
 > Note: A renderer is not passed through to the subtasks, only to the main task. It is up to you to handle that case.
+
+The `nonTTY` property returns a boolean indicating if the renderer supports non-TTY environments. The default for this property is `false` if you do not implement it.
 
 ### Observables
 
@@ -243,6 +249,10 @@ class CustomRenderer {
 	constructor(tasks, options) {
 		this._tasks = tasks;
 		this._options = Object.assign({}, options);
+	}
+
+	static get nonTTY() {
+		return true;
 	}
 
 	render() {
@@ -310,6 +320,13 @@ Default: `default`<br>
 Options: `default` `verbose` `silent`
 
 Renderer that should be used. You can either pass in the name of the known renderer, or a class of a custom renderer.
+
+##### nonTTYRenderer
+
+Type: `string` `object`<br>
+Default: `verbose`
+
+The renderer that should be used if the main renderer does not support TTY environments. You can either pass in the name of the renderer, or a class of a custom renderer.
 
 ### Instance
 
