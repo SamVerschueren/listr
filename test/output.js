@@ -4,7 +4,7 @@ import Listr from '../';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
 
-test.serial('output', async t => {
+test('output', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
