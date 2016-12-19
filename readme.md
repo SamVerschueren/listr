@@ -95,10 +95,12 @@ const tasks = new Listr([
 	},
 	{
 		title: 'Failure',
-		task: () => Promise.reject('Bar')
+		task: () => Promise.reject(new Error('Bar'))
 	}
 ]);
 ```
+
+> Tip: Always reject a promise with some kind of `Error` object.
 
 ### Observable
 
