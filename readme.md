@@ -44,8 +44,13 @@ const tasks = new Listr([
 		}
 	},
 	{
-		title: 'Install package dependencies',
-		task: () => execa('npm', ['install'])
+		title: 'Install package dependencies with Yarn',
+		task: (ctx, task) => execa('yarn')
+			.catch(() => {
+				task.title = 'Install package dependencies with npm (Yarn not available)';
+
+				return execa('npm', ['install']);
+			})
 	},
 	{
 		title: 'Run tests',
@@ -207,6 +212,33 @@ tasks.run({
 	console.log(ctx);
 	//=> {foo: 'bar', unicorn: 'rainbow'}
 });
+```
+
+
+## Task object
+
+A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task or you can skip it depending on some results.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Install package dependencies with Yarn',
+		task: (ctx, task) => execa('yarn')
+			.catch(() => {
+				ctx.yarn = false;
+
+				task.title = `${task.title} (or not)`;
+				task.skip('Yarn not available');
+			})
+	},
+	{
+		title: 'Install package dependencies with npm',
+		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn'
+		task: () => execa('npm', ['install'])
+	}
+]);
+
+tasks.run();
 ```
 
 
