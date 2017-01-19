@@ -177,6 +177,8 @@ const tasks = new Listr([
 ]);
 ```
 
+> Tip: You can still skip a task while already executing the `task` function with the [task object](#task-object).
+
 
 ## Context
 
@@ -274,6 +276,7 @@ Every task is an observable. The task emits three different events and every eve
 1. The state of the task has changed (`STATE`).
 2. The task outputted data (`DATA`).
 3. The task returns a subtask list (`SUBTASKS`).
+4. The task's title changed (`TITLE`).
 
 This allows you to flexibly build up your UI. Let's render every task that starts executing.
 
