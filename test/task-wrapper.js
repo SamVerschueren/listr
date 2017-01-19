@@ -61,3 +61,30 @@ test('skip task during task execution with message', async t => {
 
 	await list.run();
 });
+
+test('skip subtask', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: () => new Listr([
+				{
+					title: 'bar',
+					task: (ctx, task) => {
+						task.skip('foo bar');
+					}
+				}
+			], {renderer: SimpleRenderer})
+		}
+	], {renderer: SimpleRenderer});
+
+	testOutput(t, [
+		'foo [started]',
+		'bar [started]',
+		'bar [skipped]',
+		'> foo bar',
+		'foo [completed]',
+		'done'
+	]);
+
+	await list.run();
+});
