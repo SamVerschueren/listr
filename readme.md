@@ -44,8 +44,13 @@ const tasks = new Listr([
 		}
 	},
 	{
-		title: 'Install package dependencies',
-		task: () => execa('npm', ['install'])
+		title: 'Install package dependencies with Yarn',
+		task: (ctx, task) => execa('yarn')
+			.catch(() => {
+				task.title = 'Install package dependencies with npm (Yarn not available)';
+
+				return execa('npm', ['install']);
+			})
 	},
 	{
 		title: 'Run tests',
@@ -172,6 +177,8 @@ const tasks = new Listr([
 ]);
 ```
 
+> Tip: You can still skip a task while already executing the `task` function with the [task object](#task-object).
+
 
 ## Context
 
@@ -210,6 +217,33 @@ tasks.run({
 ```
 
 
+## Task object
+
+A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task or you can skip it depending on some results.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Install package dependencies with Yarn',
+		task: (ctx, task) => execa('yarn')
+			.catch(() => {
+				ctx.yarn = false;
+
+				task.title = `${task.title} (or not)`;
+				task.skip('Yarn not available');
+			})
+	},
+	{
+		title: 'Install package dependencies with npm',
+		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn'
+		task: () => execa('npm', ['install'])
+	}
+]);
+
+tasks.run();
+```
+
+
 ## Custom renderers
 
 It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should renderer, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
@@ -242,6 +276,7 @@ Every task is an observable. The task emits three different events and every eve
 1. The state of the task has changed (`STATE`).
 2. The task outputted data (`DATA`).
 3. The task returns a subtask list (`SUBTASKS`).
+4. The task's title changed (`TITLE`).
 
 This allows you to flexibly build up your UI. Let's render every task that starts executing.
 

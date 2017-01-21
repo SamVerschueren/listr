@@ -1,6 +1,9 @@
 'use strict';
 const Task = require('./lib/task');
+const TaskWrapper = require('./lib/task-wrapper');
 const renderer = require('./lib/renderer');
+
+const runTask = (task, context) => new TaskWrapper(task).run(context);
 
 class Listr {
 
@@ -59,9 +62,9 @@ class Listr {
 
 		let tasks;
 		if (this._options.concurrent === true) {
-			tasks = Promise.all(this._tasks.map(task => task.run(context)));
+			tasks = Promise.all(this._tasks.map(task => runTask(task, context)));
 		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => task.run(context)), Promise.resolve());
+			tasks = this._tasks.reduce((promise, task) => promise.then(() => runTask(task, context)), Promise.resolve());
 		}
 
 		return tasks

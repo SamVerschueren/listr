@@ -10,6 +10,8 @@ const renderHelper = (task, event) => {
 		}
 	} else if (event.type === 'DATA') {
 		console.log(`> ${event.data}`);
+	} else if (event.type === 'TITLE') {
+		console.log(`${task.title} [title changed]`);
 	}
 };
 

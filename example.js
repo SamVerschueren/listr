@@ -36,8 +36,21 @@ const tasks = new Listr([
 		}
 	},
 	{
-		title: 'Install npm dependencies',
-		task: () => delay(2000)
+		title: 'Install dependencies with Yarn',
+		task: (ctx, task) => {
+			return delay(2000)
+				.then(() => {
+					ctx.yarn = false;
+
+					task.title = `${task.title} (or not)`;
+					task.skip('Yarn not available');
+				});
+		}
+	},
+	{
+		title: 'Install dependencies with npm',
+		skip: ctx => ctx.yarn !== false && 'Already installed with Yarn',
+		task: () => delay(300)
 	},
 	{
 		title: 'Run tests',
