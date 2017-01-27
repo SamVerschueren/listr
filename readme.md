@@ -350,6 +350,13 @@ Default: `false`
 
 Set to `true` if you want tasks to run concurrently.
 
+##### exitOnError
+
+Type: `boolean`<br>
+Default: `true`
+
+Set to `false` if you don't want to stop the execution of other tasks when one or more tasks fail.
+
 ##### renderer
 
 Type: `string` `object`<br>
