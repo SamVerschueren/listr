@@ -24,19 +24,23 @@ test('create', t => {
 });
 
 test('throw error if task properties are wrong', t => {
-	t.throws(() => new Listr([{}]), 'Expected property `title` of type `string` but got `undefined`');
-	t.throws(() => new Listr([{title: 5}]), 'Expected property `title` of type `string` but got `number`');
-	t.throws(() => new Listr([{title: 'foo'}]), 'Expected property `task` of type `function` but got `undefined`');
-	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), 'Expected property `task` of type `function` but got `string`');
+	t.throws(() => new Listr([{}]), 'Expected property `title` to be of type `string`, got `undefined`');
+	t.throws(() => new Listr([{title: 5}]), 'Expected property `title` to be of type `string`, got `number`');
+	t.throws(() => new Listr([{title: 'foo'}]), 'Expected property `task` to be of type `function`, got `undefined`');
+	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), 'Expected property `task` to be of type `function`, got `string`');
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, skip: 5}]), 'Expected property `skip` to be of type `function`, got `number`');
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), 'Expected property `enabled` to be of type `function`, got `number`');
 });
 
 test('`.addTask()` throws if task properties are wrong', t => {
 	const list = new Listr();
 	t.throws(list.add.bind(list), 'Expected a task');
-	t.throws(list.add.bind(list, {}), 'Expected property `title` of type `string` but got `undefined`');
-	t.throws(list.add.bind(list, {title: 5}), 'Expected property `title` of type `string` but got `number`');
-	t.throws(list.add.bind(list, {title: 'foo'}), 'Expected property `task` of type `function` but got `undefined`');
-	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), 'Expected property `task` of type `function` but got `string`');
+	t.throws(list.add.bind(list, {}), 'Expected property `title` to be of type `string`, got `undefined`');
+	t.throws(list.add.bind(list, {title: 5}), 'Expected property `title` to be of type `string`, got `number`');
+	t.throws(list.add.bind(list, {title: 'foo'}), 'Expected property `task` to be of type `function`, got `undefined`');
+	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), 'Expected property `task` to be of type `function`, got `string`');
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, skip: 5}), 'Expected property `skip` to be of type `function`, got `number`');
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), 'Expected property `enabled` to be of type `function`, got `number`');
 });
 
 test('throw error if task rejects', t => {
