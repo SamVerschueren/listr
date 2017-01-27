@@ -47,10 +47,15 @@ const tasks = new Listr([
 		title: 'Install package dependencies with Yarn',
 		task: (ctx, task) => execa('yarn')
 			.catch(() => {
-				task.title = 'Install package dependencies with npm (Yarn not available)';
+				ctx.yarn === false;
 
-				return execa('npm', ['install']);
+				task.skip('Yarn not available, install it via `npm install -g yarn`');
 			})
+	},
+	{
+		title: 'Install package dependencies with npm',
+		enabled: ctx => ctx.yarn === false,
+		task: () => execa('npm', ['install'])
 	},
 	{
 		title: 'Run tests',
@@ -179,6 +184,33 @@ const tasks = new Listr([
 
 > Tip: You can still skip a task while already executing the `task` function with the [task object](#task-object).
 
+## Enabling tasks
+
+By default, every task is enabled which means that every task will be executed. However, it's also possible to provide an `enabled` function that returns wheter the task should be executed or not.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Install package dependencies with Yarn',
+		task: (ctx, task) => execa('yarn')
+			.catch(() => {
+				ctx.yarn === false;
+
+				task.skip('Yarn not available, install it via `npm install -g yarn`');
+			})
+	},
+	{
+		title: 'Install package dependencies with npm',
+		enabled: ctx => ctx.yarn === false,
+		task: () => execa('npm', ['install'])
+	}
+]);
+```
+
+In the above example, we try to run `yarn` first, if that fails we will fall back to `npm`. However, at first only the Yarn task will be visible. Because we set the `yarn` flag of the [context](https://github.com/SamVerschueren/listr#context) object to `false`, the second task will automatically be enabled and will be executed.
+
+> Note: This does not work in combination with [concurrent](https://github.com/SamVerschueren/listr#concurrent) tasks.
+
 
 ## Context
 
@@ -277,6 +309,7 @@ Every task is an observable. The task emits three different events and every eve
 2. The task outputted data (`DATA`).
 3. The task returns a subtask list (`SUBTASKS`).
 4. The task's title changed (`TITLE`).
+5. The task became enabled or disabled (`ENABLED`).
 
 This allows you to flexibly build up your UI. Let's render every task that starts executing.
 

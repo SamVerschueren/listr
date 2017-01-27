@@ -3,7 +3,13 @@ const Task = require('./lib/task');
 const TaskWrapper = require('./lib/task-wrapper');
 const renderer = require('./lib/renderer');
 
-const runTask = (task, context) => new TaskWrapper(task).run(context);
+const runTask = (task, context) => {
+	if (!task.isEnabled()) {
+		return Promise.resolve();
+	}
+
+	return new TaskWrapper(task).run(context);
+};
 
 class Listr {
 
@@ -29,6 +35,12 @@ class Listr {
 		this.exitOnError = this._options.exitOnError;
 
 		this.add(tasks || []);
+	}
+
+	_checkAll(context) {
+		for (const task of this._tasks) {
+			task.check(context);
+		}
 	}
 
 	get tasks() {
@@ -62,11 +74,17 @@ class Listr {
 
 		context = context || Object.create(null);
 
+		this._checkAll(context);
+
 		let tasks;
 		if (this._options.concurrent === true) {
 			tasks = Promise.all(this._tasks.map(task => runTask(task, context)));
 		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => runTask(task, context)), Promise.resolve());
+			tasks = this._tasks.reduce((promise, task) => promise.then(() => {
+				this._checkAll(context);
+
+				return runTask(task, context);
+			}), Promise.resolve());
 		}
 
 		return tasks
