@@ -26,6 +26,8 @@ class Listr {
 		this._tasks = [];
 		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
 
+		this.exitOnError = this._options.exitOnError;
+
 		this.add(tasks || []);
 	}
 
