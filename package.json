@@ -45,7 +45,7 @@
     "is-promise": "^2.1.0",
     "is-stream": "^1.1.0",
     "listr-silent-renderer": "^1.1.1",
-    "listr-update-renderer": "^0.1.1",
+    "listr-update-renderer": "^0.2.0",
     "listr-verbose-renderer": "^0.3.0",
     "log-symbols": "^1.0.2",
     "log-update": "^1.0.2",
