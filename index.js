@@ -2,13 +2,14 @@
 const Task = require('./lib/task');
 const TaskWrapper = require('./lib/task-wrapper');
 const renderer = require('./lib/renderer');
+const ListrError = require('./lib/listr-error');
 
-const runTask = (task, context) => {
+const runTask = (task, context, errors) => {
 	if (!task.isEnabled()) {
 		return Promise.resolve();
 	}
 
-	return new TaskWrapper(task).run(context);
+	return new TaskWrapper(task, errors).run(context);
 };
 
 class Listr {
@@ -74,21 +75,29 @@ class Listr {
 
 		context = context || Object.create(null);
 
+		const errors = [];
+
 		this._checkAll(context);
 
 		let tasks;
 		if (this._options.concurrent === true) {
-			tasks = Promise.all(this._tasks.map(task => runTask(task, context)));
+			tasks = Promise.all(this._tasks.map(task => runTask(task, context, errors)));
 		} else {
 			tasks = this._tasks.reduce((promise, task) => promise.then(() => {
 				this._checkAll(context);
 
-				return runTask(task, context);
+				return runTask(task, context, errors);
 			}), Promise.resolve());
 		}
 
 		return tasks
 			.then(() => {
+				if (errors.length > 0) {
+					const err = new ListrError('Something went wrong');
+					err.errors = errors;
+					throw err;
+				}
+
 				this._renderer.end();
 
 				return context;
