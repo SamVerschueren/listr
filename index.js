@@ -80,11 +80,18 @@ class Listr {
 		if (this._options.concurrent === true) {
 			tasks = Promise.all(this._tasks.map(task => runTask(task, context)));
 		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => {
-				this._checkAll(context);
+			const runAll = (tasksQueue, idx) => {
+				const task = tasksQueue[idx];
+				if (task) {
+					this._checkAll(context);
+					return runTask(task, context).then(() => {
+						return runAll(tasksQueue, ++idx);
+					});
+				}
 
-				return runTask(task, context);
-			}), Promise.resolve());
+				return;
+			};
+			tasks = runAll(this._tasks, 0);
 		}
 
 		return tasks
