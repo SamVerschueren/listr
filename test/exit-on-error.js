@@ -36,6 +36,8 @@ test('exit on error', async t => {
 });
 
 test('set `exitOnError` to false', async t => {
+	t.plan(8);
+
 	const list = new Listr(tasks, {
 		exitOnError: false,
 		renderer: SimpleRenderer
@@ -50,10 +52,17 @@ test('set `exitOnError` to false', async t => {
 		'done'
 	]);
 
-	await list.run();
+	try {
+		await list.run();
+	} catch (err) {
+		t.is(err.message, 'Something went wrong');
+		t.is(err.errors.length, 1);
+	}
 });
 
 test('set `exitOnError` to false in nested list', async t => {
+	t.plan(15);
+
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -65,7 +74,7 @@ test('set `exitOnError` to false in nested list', async t => {
 				return new Listr([
 					{
 						title: 'unicorn',
-						task: () => Promise.reject(new Error('Something went wrong'))
+						task: () => Promise.reject(new Error('Unicorn failed'))
 					},
 					{
 						title: 'rainbow',
@@ -90,23 +99,31 @@ test('set `exitOnError` to false in nested list', async t => {
 		'bar [started]',
 		'unicorn [started]',
 		'unicorn [failed]',
-		'> Something went wrong',
+		'> Unicorn failed',
 		'rainbow [started]',
 		'rainbow [completed]',
-		'bar [completed]',
+		'bar [failed]',
 		'baz [started]',
 		'baz [completed]',
 		'done'
 	]);
 
-	await list.run();
+	try {
+		await list.run();
+	} catch (err) {
+		t.is(err.message, 'Something went wrong');
+		t.is(err.errors.length, 1);
+		t.is(err.errors[0].message, 'Unicorn failed');
+	}
 });
 
 test('set `exitOnError` to false in root', async t => {
+	t.plan(17);
+
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('Something went wrong in foo'))
+			task: () => Promise.reject(new Error('Foo failed'))
 		},
 		{
 			title: 'bar',
@@ -114,7 +131,7 @@ test('set `exitOnError` to false in root', async t => {
 				return new Listr([
 					{
 						title: 'unicorn',
-						task: () => Promise.reject(new Error('Something went wrong in unicorn'))
+						task: () => Promise.reject(new Error('Unicorn failed'))
 					},
 					{
 						title: 'rainbow',
@@ -135,27 +152,36 @@ test('set `exitOnError` to false in root', async t => {
 	testOutput(t, [
 		'foo [started]',
 		'foo [failed]',
-		'> Something went wrong in foo',
+		'> Foo failed',
 		'bar [started]',
 		'unicorn [started]',
 		'unicorn [failed]',
-		'> Something went wrong in unicorn',
+		'> Unicorn failed',
 		'rainbow [started]',
 		'rainbow [completed]',
-		'bar [completed]',
+		'bar [failed]',
 		'baz [started]',
 		'baz [completed]',
 		'done'
 	]);
 
-	await list.run();
+	try {
+		await list.run();
+	} catch (err) {
+		t.is(err.name, 'ListrError');
+		t.is(err.errors.length, 2);
+		t.is(err.errors[0].message, 'Foo failed');
+		t.is(err.errors[1].message, 'Unicorn failed');
+	}
 });
 
 test('set `exitOnError` to false in root and true in child', async t => {
+	t.plan(16);
+
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('Something went wrong in foo'))
+			task: () => Promise.reject(new Error('Foo failed'))
 		},
 		{
 			title: 'bar',
@@ -163,7 +189,7 @@ test('set `exitOnError` to false in root and true in child', async t => {
 				return new Listr([
 					{
 						title: 'unicorn',
-						task: () => Promise.reject(new Error('Something went wrong in unicorn'))
+						task: () => Promise.reject(new Error('Unicorn failed'))
 					},
 					{
 						title: 'rainbow',
@@ -186,17 +212,62 @@ test('set `exitOnError` to false in root and true in child', async t => {
 	testOutput(t, [
 		'foo [started]',
 		'foo [failed]',
-		'> Something went wrong in foo',
+		'> Foo failed',
 		'bar [started]',
 		'unicorn [started]',
 		'unicorn [failed]',
-		'> Something went wrong in unicorn',
+		'> Unicorn failed',
 		'bar [failed]',
-		'> Something went wrong in unicorn',
+		'> Unicorn failed',
 		'baz [started]',
 		'baz [completed]',
 		'done'
 	]);
 
-	await list.run();
+	try {
+		await list.run();
+	} catch (err) {
+		t.is(err.name, 'ListrError');
+		t.is(err.errors.length, 2);
+		t.is(err.errors[0].message, 'Foo failed');
+		t.is(err.errors[1].message, 'Unicorn failed');
+	}
+});
+
+test('exit on error throws error object with context', async t => {
+	t.plan(10);
+
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: () => Promise.reject(new Error('Foo failed'))
+		},
+		{
+			title: 'bar',
+			task: ctx => {
+				ctx.foo = 'bar';
+			}
+		}
+	], {
+		exitOnError: false,
+		renderer: SimpleRenderer
+	});
+
+	testOutput(t, [
+		'foo [started]',
+		'foo [failed]',
+		'> Foo failed',
+		'bar [started]',
+		'bar [completed]',
+		'done'
+	]);
+
+	try {
+		await list.run();
+	} catch (err) {
+		t.is(err.name, 'ListrError');
+		t.is(err.errors.length, 1);
+		t.is(err.errors[0].message, 'Foo failed');
+		t.deepEqual(err.context, {foo: 'bar'});
+	}
 });
