@@ -23,6 +23,26 @@ test('changing the title during task execution', async t => {
 	await list.run();
 });
 
+test('changing the output during task execution', async t => {
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: (ctx, task) => {
+				task.output = 'some output';
+			}
+		}
+	], {renderer: SimpleRenderer});
+
+	testOutput(t, [
+		'foo [started]',
+		'> some output',
+		'foo [completed]',
+		'done'
+	]);
+
+	await list.run();
+});
+
 test('skip task during task execution with no message', async t => {
 	const list = new Listr([
 		{
