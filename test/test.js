@@ -43,7 +43,7 @@ test('`.addTask()` throws if task properties are wrong', t => {
 	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), 'Expected property `enabled` to be of type `function`, got `number`');
 });
 
-test('throw error if task rejects', t => {
+test('throw error if task rejects', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -51,10 +51,10 @@ test('throw error if task rejects', t => {
 		}
 	], {renderer: 'silent'});
 
-	t.throws(list.run(), 'foo bar');
+	await t.throws(list.run(), 'foo bar');
 });
 
-test('throw error if task throws', t => {
+test('throw error if task throws', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -64,10 +64,10 @@ test('throw error if task throws', t => {
 		}
 	], {renderer: 'silent'});
 
-	t.throws(list.run(), 'foo bar');
+	await t.throws(list.run(), 'foo bar');
 });
 
-test('throw error if task skip rejects', t => {
+test('throw error if task skip rejects', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -76,10 +76,10 @@ test('throw error if task skip rejects', t => {
 		}
 	], {renderer: 'silent'}, {renderer: 'silent'});
 
-	t.throws(list.run(), 'skip foo');
+	await t.throws(list.run(), 'skip foo');
 });
 
-test('throw error if task skip throws', t => {
+test('throw error if task skip throws', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -90,10 +90,10 @@ test('throw error if task skip throws', t => {
 		}
 	], {renderer: 'silent'});
 
-	t.throws(list.run(), 'skip foo');
+	await t.throws(list.run(), 'skip foo');
 });
 
-test('execute tasks', t => {
+test('execute tasks', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -101,7 +101,7 @@ test('execute tasks', t => {
 		}
 	], {renderer: 'silent'});
 
-	t.notThrows(list.run());
+	await t.notThrows(list.run());
 });
 
 test('add tasks', t => {
