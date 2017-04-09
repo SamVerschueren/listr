@@ -95,7 +95,7 @@ const tasks = new Listr([
 
 ### Promises
 
-A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, it it rejects, the task failed. If the task function updates the task's `output` property it will be displayed.
+A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, it it rejects, the task failed.
 
 ```js
 const tasks = new Listr([
@@ -106,18 +106,6 @@ const tasks = new Listr([
 	{
 		title: 'Failure',
 		task: () => Promise.reject(new Error('Bar'))
-	},
-	{
-		title: 'Output',
-		task: (ctx, task) => {
-			return new Promise(resolve => {
-				task.output = 'Starting Task';
-				setTimeout(() => {
-					task.output = 'Continuing Task'
-				}, 2000);
-				setTimeout(resolve, 3000)
-			})
-		}
 	}
 ]);
 ```
@@ -263,7 +251,7 @@ tasks.run({
 
 ## Task object
 
-A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task or you can skip it depending on some results.
+A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task, you can skip it depending on some results or you can update the task's output.
 
 ```js
 const tasks = new Listr([
@@ -280,7 +268,11 @@ const tasks = new Listr([
 	{
 		title: 'Install package dependencies with npm',
 		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn'
-		task: () => execa('npm', ['install'])
+		task: (ctx, task) => {
+			task.output = 'Installing dependencies...';
+
+			return execa('npm', ['install'])
+		}
 	}
 ]);
 
