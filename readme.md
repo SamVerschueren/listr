@@ -251,7 +251,7 @@ tasks.run({
 
 ## Task object
 
-A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task or you can skip it depending on some results.
+A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task, you can skip it depending on some results or you can update the task's output.
 
 ```js
 const tasks = new Listr([
@@ -268,7 +268,11 @@ const tasks = new Listr([
 	{
 		title: 'Install package dependencies with npm',
 		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn'
-		task: () => execa('npm', ['install'])
+		task: (ctx, task) => {
+			task.output = 'Installing dependencies...';
+
+			return execa('npm', ['install'])
+		}
 	}
 ]);
 
