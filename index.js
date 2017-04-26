@@ -80,21 +80,19 @@ class Listr {
 
 		this._checkAll(context);
 
-		let tasks;
-		if (this._options.concurrent === true) {
-			tasks = Promise.all(this._tasks.map(task => runTask(task, context, errors)));
-		} else if (typeof this._options.concurrent === 'number' && this._options.concurrent > 0) {
-			tasks = pMap(this._tasks, task => {
-				this._checkAll(context);
-				return runTask(task, context, errors);
-			}, {concurrency: this._options.concurrent});
+		let concurrency;
+		if (!this._options.concurrent) {
+			concurrency = 1;
+		} else if (typeof this._options.concurrent === 'number') {
+			concurrency = this._options.concurrent;
 		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => {
-				this._checkAll(context);
-
-				return runTask(task, context, errors);
-			}), Promise.resolve());
+			concurrency = 'Infinity';
 		}
+
+		const tasks = pMap(this._tasks, task => {
+			this._checkAll(context);
+			return runTask(task, context, errors);
+		}, {concurrency});
 
 		return tasks
 			.then(() => {
