@@ -32,6 +32,10 @@ test('throw error if task properties are wrong', t => {
 	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), 'Expected property `enabled` to be of type `function`, got `number`');
 });
 
+test('throw error if a task object is provided', t => {
+	t.throws(() => new Listr({title: 'foo', task: () => {}}), 'Expected an array of tasks or an options object, got a task object');
+});
+
 test('`.addTask()` throws if task properties are wrong', t => {
 	const list = new Listr();
 	t.throws(list.add.bind(list), 'Expected a task');

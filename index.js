@@ -16,6 +16,10 @@ class Listr {
 
 	constructor(tasks, opts) {
 		if (tasks && !Array.isArray(tasks) && typeof tasks === 'object') {
+			if (typeof tasks.title === 'string' && typeof tasks.task === 'function') {
+				throw new TypeError('Expected an array of tasks or an options object, got a task object');
+			}
+
 			opts = tasks;
 			tasks = [];
 		}
