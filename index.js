@@ -33,12 +33,11 @@ class Listr {
 		}, opts);
 		this._tasks = [];
 
+		this.concurrency = 1;
 		if (this._options.concurrent === true) {
 			this.concurrency = Infinity;
 		} else if (typeof this._options.concurrent === 'number') {
 			this.concurrency = this._options.concurrent;
-		} else {
-			this.concurrency = 1;
 		}
 
 		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
