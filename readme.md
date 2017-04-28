@@ -385,8 +385,7 @@ Any renderer specific options.
 Type: `boolean` `number`<br>
 Default: `false`
 
-Set to `true` if you want to run tasks in parallel, set to a number to control
-the concurrency. By default it runs tasks sequentially.
+Set to `true` if you want to run tasks in parallel, set to a number to control the concurrency. By default it runs tasks sequentially.
 
 ##### exitOnError
 
