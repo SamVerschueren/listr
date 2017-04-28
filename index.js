@@ -1,4 +1,5 @@
 'use strict';
+const pMap = require('p-map');
 const Task = require('./lib/task');
 const TaskWrapper = require('./lib/task-wrapper');
 const renderer = require('./lib/renderer');
@@ -35,6 +36,14 @@ class Listr {
 			nonTTYRenderer: 'verbose'
 		}, opts);
 		this._tasks = [];
+
+		this.concurrency = 1;
+		if (this._options.concurrent === true) {
+			this.concurrency = Infinity;
+		} else if (typeof this._options.concurrent === 'number') {
+			this.concurrency = this._options.concurrent;
+		}
+
 		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
 
 		this.exitOnError = this._options.exitOnError;
@@ -83,16 +92,10 @@ class Listr {
 
 		this._checkAll(context);
 
-		let tasks;
-		if (this._options.concurrent === true) {
-			tasks = Promise.all(this._tasks.map(task => runTask(task, context, errors)));
-		} else {
-			tasks = this._tasks.reduce((promise, task) => promise.then(() => {
-				this._checkAll(context);
-
-				return runTask(task, context, errors);
-			}), Promise.resolve());
-		}
+		const tasks = pMap(this._tasks, task => {
+			this._checkAll(context);
+			return runTask(task, context, errors);
+		}, {concurrency: this.concurrency});
 
 		return tasks
 			.then(() => {
