@@ -69,6 +69,7 @@ test('run tasks in sequential parallel chunks, if concurrency is a number', asyn
 		renderer: SimpleRenderer,
 		concurrent: 2
 	});
+
 	testOutput(t, [
 		'P1 [started]',
 		'P2 [started]',
@@ -80,5 +81,6 @@ test('run tasks in sequential parallel chunks, if concurrency is a number', asyn
 		'P4 [completed]',
 		'done'
 	]);
+
 	await list.run();
 });

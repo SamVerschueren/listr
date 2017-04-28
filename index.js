@@ -32,6 +32,15 @@ class Listr {
 			nonTTYRenderer: 'verbose'
 		}, opts);
 		this._tasks = [];
+
+		if (this._options.concurrent === true) {
+			this.concurrency = Infinity;
+		} else if (typeof this._options.concurrent === 'number') {
+			this.concurrency = this._options.concurrent;
+		} else {
+			this.concurrency = 1;
+		}
+
 		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
 
 		this.exitOnError = this._options.exitOnError;
@@ -80,19 +89,10 @@ class Listr {
 
 		this._checkAll(context);
 
-		let concurrency;
-		if (!this._options.concurrent) {
-			concurrency = 1;
-		} else if (typeof this._options.concurrent === 'number') {
-			concurrency = this._options.concurrent;
-		} else {
-			concurrency = 'Infinity';
-		}
-
 		const tasks = pMap(this._tasks, task => {
 			this._checkAll(context);
 			return runTask(task, context, errors);
-		}, {concurrency});
+		}, {concurrency: this.concurrency});
 
 		return tasks
 			.then(() => {
