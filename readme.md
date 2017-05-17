@@ -4,7 +4,7 @@
 
 > Terminal task list
 
-<img src="media/screenshot.gif">
+<img src="https://raw.githubusercontent.com/SamVerschueren/listr/master/media/screenshot.gif">
 
 ## Install
 
