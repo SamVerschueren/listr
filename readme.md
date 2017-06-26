@@ -194,7 +194,7 @@ const tasks = new Listr([
 		title: 'Install package dependencies with Yarn',
 		task: (ctx, task) => execa('yarn')
 			.catch(() => {
-				ctx.yarn === false;
+				ctx.yarn = false;
 
 				task.skip('Yarn not available, install it via `npm install -g yarn`');
 			})
