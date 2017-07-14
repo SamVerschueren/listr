@@ -95,7 +95,7 @@ const tasks = new Listr([
 
 ### Promises
 
-A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, it it rejects, the task failed.
+A `task` can also be async by returning a `Promise`. If the promise resolves, the task completed successfully, if it rejects, the task failed.
 
 ```js
 const tasks = new Listr([
