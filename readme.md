@@ -186,7 +186,7 @@ const tasks = new Listr([
 
 ## Enabling tasks
 
-By default, every task is enabled which means that every task will be executed. However, it's also possible to provide an `enabled` function that returns wheter the task should be executed or not.
+By default, every task is enabled which means that every task will be executed. However, it's also possible to provide an `enabled` function that returns whether the task should be executed or not.
 
 ```js
 const tasks = new Listr([
