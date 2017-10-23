@@ -378,7 +378,7 @@ Skip function. Read more about [skipping tasks](#skipping-tasks).
 
 #### options
 
-Any renderer specific options.
+Any renderer specific options. For instance, when using the `update-renderer`, you can pass in all of its [options](https://github.com/SamVerschueren/listr-update-renderer#options).
 
 ##### concurrent
 
