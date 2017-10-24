@@ -1,6 +1,6 @@
 # listr
 
-[![Build Status Linux](https://travis-ci.org/SamVerschueren/listr.svg?branch=master)](https://travis-ci.org/SamVerschueren/listr) [![Build status Windows](https://ci.appveyor.com/api/projects/status/y8vhpwsb98b8o4cm?svg=true)](https://ci.appveyor.com/project/SamVerschueren/listr) [![Coverage Status](https://coveralls.io/repos/SamVerschueren/listr/badge.svg?branch=master&service=github)](https://coveralls.io/github/SamVerschueren/listr?branch=master)
+[![Build Status Linux](https://travis-ci.org/SamVerschueren/listr.svg?branch=master)](https://travis-ci.org/SamVerschueren/listr) [![Build status Windows](https://ci.appveyor.com/api/projects/status/y8vhpwsb98b8o4cm?svg=true)](https://ci.appveyor.com/project/SamVerschueren/listr) [![Coverage Status](https://codecov.io/gh/SamVerschueren/listr/branch/master/graph/badge.svg)](https://codecov.io/gh/SamVerschueren/listr)
 
 > Terminal task list
 
