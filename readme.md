@@ -146,8 +146,20 @@ const tasks = new Listr([
 
 ### Streams
 
-It's also possible to return a `stream`. The stream will be converted to an `Observable` and handled as such.
+It's also possible to return a [`ReadableStream`](https://nodejs.org/api/stream.html#stream_class_stream_readable). The stream will be converted to an `Observable` and handled as such.
 
+```js
+const fs = require('fs');
+const split = require('split');
+
+const list = new Listr([
+	{
+		title: 'File',
+		task: () => fs.createReadStream('data.txt', 'utf8')
+			.pipe(split(/\r?\n/, null, {trailing: false}))
+	}
+]);
+```
 
 ### Skipping tasks
 
