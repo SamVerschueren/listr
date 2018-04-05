@@ -51,7 +51,7 @@
     "log-update": "^1.0.2",
     "ora": "^0.2.3",
     "p-map": "^1.1.1",
-    "rxjs": "^5.6.0-forward-compat.0 || ^6.0.0-rc.0",
+    "rxjs": "^5.6.0-forward-compat.0 || ^6.0.0-rc.1",
     "stream-to-observable": "^0.2.0",
     "strip-ansi": "^3.0.1"
   },

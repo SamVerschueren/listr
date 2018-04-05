@@ -1,6 +1,6 @@
 import test from 'ava';
 import {Observable} from 'rxjs';
-import Listr from '../';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
 
