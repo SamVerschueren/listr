@@ -1,6 +1,6 @@
 import {serial as test} from 'ava';
 import delay from 'delay';
-import Listr from '../';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
 

@@ -1,5 +1,5 @@
 import test from 'ava';
-import Listr from '../';
+import Listr from '..';
 
 test('create', t => {
 	t.notThrows(() => new Listr());
