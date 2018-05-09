@@ -70,5 +70,10 @@
   "lint-staged": {
     "*.js": "xo"
   },
-  "pre-commit": "lint:staged"
+  "pre-commit": "lint:staged",
+  "xo": {
+    "rules": {
+      "prefer-destructuring": "off"
+    }
+  }
 }

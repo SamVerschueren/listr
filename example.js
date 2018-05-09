@@ -1,5 +1,5 @@
 'use strict';
-const Observable = require('rxjs/Observable').Observable;
+const Observable = require('rxjs').Observable;
 const logSymbols = require('log-symbols');
 const delay = require('delay');
 const Listr = require('.');
