@@ -65,7 +65,7 @@
     "nyc": "^8.3.2",
     "pre-commit": "^1.2.2",
     "split": "^1.0.1",
-    "xo": "*",
+    "xo": "^0.20.3",
     "zen-observable": "^0.3.0"
   },
   "lint-staged": {
