@@ -42,7 +42,6 @@
     "cli-truncate": "^0.2.1",
     "figures": "^1.7.0",
     "indent-string": "^2.1.0",
-    "is-observable": "^0.2.0",
     "is-promise": "^2.1.0",
     "is-stream": "^1.1.0",
     "listr-silent-renderer": "^1.1.1",
