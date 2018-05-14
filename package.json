@@ -10,7 +10,7 @@
     "url": "github.com/SamVerschueren"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "clinton && xo && nyc ava",
@@ -65,7 +65,7 @@
     "nyc": "^8.3.2",
     "pre-commit": "^1.2.2",
     "split": "^1.0.1",
-    "xo": "^0.20.3",
+    "xo": "*",
     "zen-observable": "^0.3.0"
   },
   "lint-staged": {
