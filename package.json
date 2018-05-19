@@ -1,6 +1,6 @@
 {
   "name": "listr",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Terminal task list",
   "license": "MIT",
   "repository": "SamVerschueren/listr",
@@ -10,7 +10,7 @@
     "url": "github.com/SamVerschueren"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "clinton && xo && nyc ava",
@@ -38,10 +38,11 @@
     "idle"
   ],
   "dependencies": {
+    "@samverschueren/stream-to-observable": "^0.3.0",
     "cli-truncate": "^0.2.1",
     "figures": "^1.7.0",
     "indent-string": "^3.0.0",
-    "is-observable": "^0.2.0",
+    "is-observable": "^1.1.0",
     "is-promise": "^2.1.0",
     "is-stream": "^1.1.0",
     "listr-silent-renderer": "^1.1.1",
@@ -51,8 +52,7 @@
     "log-update": "^1.0.2",
     "ora": "^0.2.3",
     "p-map": "^1.1.1",
-    "rxjs": "^5.6.0-forward-compat.0 || ^6.0.0-rc.1",
-    "stream-to-observable": "^0.2.0",
+    "rxjs": "^6.1.0",
     "strip-ansi": "^3.0.1"
   },
   "devDependencies": {
@@ -71,5 +71,10 @@
   "lint-staged": {
     "*.js": "xo"
   },
-  "pre-commit": "lint:staged"
+  "pre-commit": "lint:staged",
+  "xo": {
+    "rules": {
+      "prefer-destructuring": "off"
+    }
+  }
 }
