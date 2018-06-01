@@ -24,12 +24,12 @@ test('create', t => {
 });
 
 test('throw error if task properties are wrong', t => {
-	t.throws(() => new Listr([{}]), 'Expected argument to be of type `string` but received type `undefined`');
-	t.throws(() => new Listr([{title: 5}]), 'Expected argument to be of type `string` but received type `number`');
-	t.throws(() => new Listr([{title: 'foo'}]), 'Expected argument to be of type `function` but received type `undefined`');
-	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), 'Expected argument to be of type `function` but received type `string`');
-	t.throws(() => new Listr([{title: 'foo', task: () => {}, skip: 5}]), 'Expected argument to be of type `function` but received type `number`');
-	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), 'Expected argument to be of type `function` but received type `number`');
+	t.throws(() => new Listr([{}]), 'Expected `task.title` to be of type `string` but received type `undefined`');
+	t.throws(() => new Listr([{title: 5}]), 'Expected `task.title` to be of type `string` but received type `number`');
+	t.throws(() => new Listr([{title: 'foo'}]), 'Expected `task.task` to be of type `Function` but received type `undefined`');
+	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), 'Expected `task.task` to be of type `Function` but received type `string`');
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, skip: 5}]), 'Expected `task.skip` to be of type `Function` but received type `number`');
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), 'Expected `task.enabled` to be of type `Function` but received type `number`');
 });
 
 test('throw error if a task object is provided', t => {
@@ -38,13 +38,13 @@ test('throw error if a task object is provided', t => {
 
 test('`.addTask()` throws if task properties are wrong', t => {
 	const list = new Listr();
-	t.throws(list.add.bind(list), 'Expected argument to be of type `object` but received type `undefined`');
-	t.throws(list.add.bind(list, {}), 'Expected argument to be of type `string` but received type `undefined`');
-	t.throws(list.add.bind(list, {title: 5}), 'Expected argument to be of type `string` but received type `number`');
-	t.throws(list.add.bind(list, {title: 'foo'}), 'Expected argument to be of type `function` but received type `undefined`');
-	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), 'Expected argument to be of type `function` but received type `string`');
-	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, skip: 5}), 'Expected argument to be of type `function` but received type `number`');
-	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), 'Expected argument to be of type `function` but received type `number`');
+	t.throws(list.add.bind(list), 'Expected `task` to be of type `object` but received type `undefined`');
+	t.throws(list.add.bind(list, {}), 'Expected `task.title` to be of type `string` but received type `undefined`');
+	t.throws(list.add.bind(list, {title: 5}), 'Expected `task.title` to be of type `string` but received type `number`');
+	t.throws(list.add.bind(list, {title: 'foo'}), 'Expected `task.task` to be of type `Function` but received type `undefined`');
+	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), 'Expected `task.task` to be of type `Function` but received type `string`');
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, skip: 5}), 'Expected `task.skip` to be of type `Function` but received type `number`');
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), 'Expected `task.enabled` to be of type `Function` but received type `number`');
 });
 
 test('throw error if task rejects', async t => {
