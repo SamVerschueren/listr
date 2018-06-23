@@ -118,8 +118,10 @@ const tasks = new Listr([
 
 A `task` can also return an `Observable`. The thing about observables is that it can emit multiple values and can be used to show the output of the
 task. Please note that only the last line of the output is rendered.
+_(You can use whatever Observable package you want like [zen](https://www.npmjs.com/package/zen-observable) or [RxJS](https://www.npmjs.com/package/rxjs))_
 
 ```js
+const Observable = require('zen-observable'); 
 const tasks = new Listr([
 	{
 		title: 'Success',
