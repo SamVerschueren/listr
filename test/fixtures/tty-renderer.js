@@ -2,7 +2,6 @@
 const SimpleRenderer = require('./simple-renderer');
 
 class TTYRenderer extends SimpleRenderer {
-
 	static get nonTTY() {
 		return false;
 	}

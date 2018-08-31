@@ -34,7 +34,6 @@ const render = tasks => {
 };
 
 class SimpleRenderer {
-
 	constructor(tasks) {
 		this._tasks = tasks;
 	}
