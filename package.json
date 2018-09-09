@@ -45,6 +45,7 @@
 		"listr-silent-renderer": "^1.1.1",
 		"listr-update-renderer": "^0.4.0",
 		"listr-verbose-renderer": "^0.4.0",
+		"ow": "^0.6.0",
 		"p-map": "^1.1.1",
 		"rxjs": "^6.1.0"
 	},
