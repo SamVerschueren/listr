@@ -192,9 +192,9 @@ test('context is attached to error object', async t => {
 	try {
 		await list.run();
 		t.fail('Should throw error');
-	} catch (err) {
-		t.is(err.message, 'foo bar');
-		t.deepEqual(err.context, {
+	} catch (error) {
+		t.is(error.message, 'foo bar');
+		t.deepEqual(error.context, {
 			foo: 'bar'
 		});
 	}

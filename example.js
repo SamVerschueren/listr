@@ -19,7 +19,7 @@ const tasks = new Listr([
 
 							delay(2000)
 								.then(() => {
-									observer.next(`bar`);
+									observer.next('bar');
 									return delay(2000);
 								})
 								.then(() => {
@@ -79,6 +79,6 @@ const tasks = new Listr([
 	renderer
 });
 
-tasks.run().catch(err => {
-	console.error(err.message);
+tasks.run().catch(error => {
+	console.error(error.message);
 });
