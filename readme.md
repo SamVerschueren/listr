@@ -226,7 +226,7 @@ In the above example, we try to run `yarn` first, if that fails we will fall bac
 
 ## Context
 
-A context object is being passed as argument into every `skip` and `task` function. This allows you to create composable tasks and change the behaviour of your task depending on previous results.
+A context object is passed as argument to every `skip` and `task` function. This allows you to create composable tasks and change the behaviour of your task depending on previous results.
 
 ```js
 const tasks = new Listr([
@@ -263,7 +263,7 @@ tasks.run({
 
 ## Task object
 
-A special task object is being passed as second argument into the `task` function. This task object lets you change the title while running your task, you can skip it depending on some results or you can update the task's output.
+A special task object is passed as second argument to the `task` function. This task object lets you change the title while running your task, you can skip it depending on some results or you can update the task's output.
 
 ```js
 const tasks = new Listr([
@@ -294,7 +294,7 @@ tasks.run();
 
 ## Custom renderers
 
-It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should renderer, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
+It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should render, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called when all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
 
 ```js
 class CustomRenderer {
@@ -327,7 +327,7 @@ Every task is an observable. The task emits three different events and every eve
 4. The task's title changed (`TITLE`).
 5. The task became enabled or disabled (`ENABLED`).
 
-This allows you to flexibly build up your UI. Let's render every task that starts executing.
+This allows you to flexibly build your UI. Let's render every task that starts executing.
 
 ```js
 class CustomRenderer {
