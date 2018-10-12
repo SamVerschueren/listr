@@ -50,12 +50,6 @@ class Listr {
 		this.add(tasks || []);
 	}
 
-	_checkAll(context) {
-		for (const task of this._tasks) {
-			task.check(context);
-		}
-	}
-
 	get tasks() {
 		return this._tasks;
 	}
@@ -89,10 +83,7 @@ class Listr {
 
 		const errors = [];
 
-		this._checkAll(context);
-
 		const tasks = pMap(this._tasks, task => {
-			this._checkAll(context);
 			return runTask(task, context, errors);
 		}, {concurrency: this.concurrency});
 
