@@ -279,7 +279,7 @@ const tasks = new Listr([
 	},
 	{
 		title: 'Install package dependencies with npm',
-		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn'
+		skip: ctx => ctx.yarn !== false && 'Dependencies already installed with Yarn',
 		task: (ctx, task) => {
 			task.output = 'Installing dependencies...';
 
