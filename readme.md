@@ -120,6 +120,8 @@ A `task` can also return an `Observable`. The thing about observables is that it
 task. Please note that only the last line of the output is rendered.
 
 ```js
+const {Observable} = require('rxjs');
+
 const tasks = new Listr([
 	{
 		title: 'Success',
@@ -143,6 +145,8 @@ const tasks = new Listr([
 	}
 ]);
 ```
+
+You can use the `Observable` package you feel most comfortable with, like [RxJS](https://www.npmjs.com/package/rxjs) or [zen-observable](https://www.npmjs.com/package/zen-observable).
 
 ### Streams
 
