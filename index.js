@@ -108,10 +108,10 @@ class Listr {
 
 				return context;
 			})
-			.catch(err => {
-				err.context = context;
-				this._renderer.end(err);
-				throw err;
+			.catch(error => {
+				error.context = context;
+				this._renderer.end(error);
+				throw error;
 			});
 	}
 }

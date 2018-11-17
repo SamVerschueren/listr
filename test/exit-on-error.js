@@ -30,8 +30,8 @@ test('exit on error', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.message, 'Something went wrong');
+	} catch (error) {
+		t.is(error.message, 'Something went wrong');
 	}
 });
 
@@ -54,9 +54,9 @@ test('set `exitOnError` to false', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.message, 'Something went wrong');
-		t.is(err.errors.length, 1);
+	} catch (error) {
+		t.is(error.message, 'Something went wrong');
+		t.is(error.errors.length, 1);
 	}
 });
 
@@ -110,10 +110,10 @@ test('set `exitOnError` to false in nested list', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.message, 'Something went wrong');
-		t.is(err.errors.length, 1);
-		t.is(err.errors[0].message, 'Unicorn failed');
+	} catch (error) {
+		t.is(error.message, 'Something went wrong');
+		t.is(error.errors.length, 1);
+		t.is(error.errors[0].message, 'Unicorn failed');
 	}
 });
 
@@ -167,11 +167,11 @@ test('set `exitOnError` to false in root', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.name, 'ListrError');
-		t.is(err.errors.length, 2);
-		t.is(err.errors[0].message, 'Foo failed');
-		t.is(err.errors[1].message, 'Unicorn failed');
+	} catch (error) {
+		t.is(error.name, 'ListrError');
+		t.is(error.errors.length, 2);
+		t.is(error.errors[0].message, 'Foo failed');
+		t.is(error.errors[1].message, 'Unicorn failed');
 	}
 });
 
@@ -226,11 +226,11 @@ test('set `exitOnError` to false in root and true in child', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.name, 'ListrError');
-		t.is(err.errors.length, 2);
-		t.is(err.errors[0].message, 'Foo failed');
-		t.is(err.errors[1].message, 'Unicorn failed');
+	} catch (error) {
+		t.is(error.name, 'ListrError');
+		t.is(error.errors.length, 2);
+		t.is(error.errors[0].message, 'Foo failed');
+		t.is(error.errors[1].message, 'Unicorn failed');
 	}
 });
 
@@ -264,10 +264,10 @@ test('exit on error throws error object with context', async t => {
 
 	try {
 		await list.run();
-	} catch (err) {
-		t.is(err.name, 'ListrError');
-		t.is(err.errors.length, 1);
-		t.is(err.errors[0].message, 'Foo failed');
-		t.deepEqual(err.context, {foo: 'bar'});
+	} catch (error) {
+		t.is(error.name, 'ListrError');
+		t.is(error.errors.length, 1);
+		t.is(error.errors[0].message, 'Foo failed');
+		t.deepEqual(error.context, {foo: 'bar'});
 	}
 });
