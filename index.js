@@ -17,7 +17,9 @@ class Listr {
 	constructor(tasks, opts) {
 		if (tasks && !Array.isArray(tasks) && typeof tasks === 'object') {
 			if (typeof tasks.title === 'string' && typeof tasks.task === 'function') {
-				throw new TypeError('Expected an array of tasks or an options object, got a task object');
+				throw new TypeError(
+					'Expected an array of tasks or an options object, got a task object'
+				);
 			}
 
 			opts = tasks;
@@ -28,12 +30,16 @@ class Listr {
 			throw new TypeError('Expected an array of tasks');
 		}
 
-		this._options = Object.assign({
-			showSubtasks: true,
-			concurrent: false,
-			renderer: 'default',
-			nonTTYRenderer: 'verbose'
-		}, opts);
+		this._options = Object.assign(
+			{
+				showSubtasks: true,
+				errorOnExit: true,
+				concurrent: false,
+				renderer: 'default',
+				nonTTYRenderer: 'verbose'
+			},
+			opts
+		);
 		this._tasks = [];
 
 		this.concurrency = 1;
@@ -43,9 +49,13 @@ class Listr {
 			this.concurrency = this._options.concurrent;
 		}
 
-		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
+		this._RendererClass = renderer.getRenderer(
+			this._options.renderer,
+			this._options.nonTTYRenderer
+		);
 
 		this.exitOnError = this._options.exitOnError;
+		this.errorOnExit = this._options.errorOnExit;
 
 		this.add(tasks || []);
 	}
@@ -91,17 +101,23 @@ class Listr {
 
 		this._checkAll(context);
 
-		const tasks = pMap(this._tasks, task => {
-			this._checkAll(context);
-			return runTask(task, context, errors);
-		}, {concurrency: this.concurrency});
+		const tasks = pMap(
+			this._tasks,
+			task => {
+				this._checkAll(context);
+				return runTask(task, context, errors);
+			},
+			{ concurrency: this.concurrency }
+		);
 
 		return tasks
 			.then(() => {
 				if (errors.length > 0) {
-					const err = new ListrError('Something went wrong');
-					err.errors = errors;
-					throw err;
+					if (this.errorOnExit === true) {
+						const err = new ListrError('Something went wrong');
+						err.errors = errors;
+						throw err;
+					}
 				}
 
 				this._renderer.end();
