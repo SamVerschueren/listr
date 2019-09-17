@@ -56,8 +56,10 @@
 		"hook-std": "^1.1.0",
 		"lint-staged": "^8.0.5",
 		"log-symbols": "^2.2.0",
+		"mockery": "^2.1.0",
 		"nyc": "^13.1.0",
 		"pre-commit": "^1.2.2",
+		"sinon": "^7.4.2",
 		"split": "^1.0.1",
 		"xo": "*",
 		"zen-observable": "^0.8.11"
