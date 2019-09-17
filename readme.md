@@ -296,6 +296,28 @@ tasks.run();
 ```
 
 
+## Rendering options
+
+By default, [listr-update-renderer](https://github.com/SamVerschueren/listr-update-renderer) is active. This renderer refreshes the state of the tasks every 100 milliseconds. With the option ```suspendUpdateRenderer``` the refresh can be suspended for the time the task is running. After the task is completed, the listr-update-renderer starts again refreshing the state of the tasks.
+
+```js
+const tasks = new Listr([
+	{
+		title: 'Encrypt gpg-file',
+		task: () => execa('gpg', ['-e', 'file']),
+		options: {suspendUpdateRenderer: true}
+	}
+	{
+		title: 'Remove the unencrypted file',
+		task: () => execa('rm', ['file'])
+	}
+]);
+
+tasks.run();
+```
+
+This feature is usefull for tasks with user-input. The user-input is always gobbled up, when the listr-update-renderer is not in suspend-mode.
+
 ## Custom renderers
 
 It's possible to write custom renderers for Listr. A renderer is an ES6 class that accepts the tasks that it should render, and the Listr options object. It has two methods, the `render` method which is called when it should start rendering, and the `end` method. The `end` method is called when all the tasks are completed or if a task failed. If a task failed, the error object is passed in via an argument.
