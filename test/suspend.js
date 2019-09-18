@@ -26,7 +26,7 @@ function getTasks() {
 				return new Promise(resolve => {
 					setTimeout(() => {
 						resolve('predefined output');
-					}, 200);
+					}, 150);
 				});
 			}
 		},
