@@ -68,7 +68,28 @@
 	"pre-commit": "lint:staged",
 	"xo": {
 		"rules": {
-			"prefer-destructuring": "off"
+			"prefer-destructuring": "off",
+			"ava/no-import-test-files": [
+				"off",
+				{
+					"files": [
+						"test/*"
+					]
+				}
+			],
+			"accessor-pairs": [
+				"off",
+				{
+					"files": [
+						"lib/task-wrapper.js"
+					]
+				}
+			]
 		}
+	},
+	"ava": {
+		"files": [
+			"!test/fixtures"
+		]
 	}
 }
