@@ -1,8 +1,9 @@
 'use strict';
 const hookStd = require('hook-std');
 
-exports.testOutput = (t, expected) => {
-	t.plan(t._test.planCount || expected.length);
+exports.testOutput = (t, expected, plannedAssertions) => {
+	t.plan(plannedAssertions || expected.length);
+
 	let i = 0;
 
 	return hookStd.stdout((actual, unhook) => {
