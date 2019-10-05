@@ -1,7 +1,7 @@
 import {serial as test} from 'ava';
-import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
+import Listr from '..';
 
 const tasks = [
 	{
@@ -15,8 +15,6 @@ const tasks = [
 ];
 
 test('exit on error', async t => {
-	t.plan(5);
-
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer
 	});
@@ -26,7 +24,7 @@ test('exit on error', async t => {
 		'foo [failed]',
 		'> Something went wrong',
 		'done'
-	]);
+	], 5);
 
 	try {
 		await list.run();
@@ -36,8 +34,6 @@ test('exit on error', async t => {
 });
 
 test('set `exitOnError` to false', async t => {
-	t.plan(8);
-
 	const list = new Listr(tasks, {
 		exitOnError: false,
 		renderer: SimpleRenderer
@@ -50,7 +46,7 @@ test('set `exitOnError` to false', async t => {
 		'bar [started]',
 		'bar [completed]',
 		'done'
-	]);
+	], 8);
 
 	try {
 		await list.run();
@@ -61,8 +57,6 @@ test('set `exitOnError` to false', async t => {
 });
 
 test('set `exitOnError` to false in nested list', async t => {
-	t.plan(15);
-
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -106,7 +100,7 @@ test('set `exitOnError` to false in nested list', async t => {
 		'baz [started]',
 		'baz [completed]',
 		'done'
-	]);
+	], 15);
 
 	try {
 		await list.run();
@@ -118,8 +112,6 @@ test('set `exitOnError` to false in nested list', async t => {
 });
 
 test('set `exitOnError` to false in root', async t => {
-	t.plan(17);
-
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -163,7 +155,7 @@ test('set `exitOnError` to false in root', async t => {
 		'baz [started]',
 		'baz [completed]',
 		'done'
-	]);
+	], 17);
 
 	try {
 		await list.run();
@@ -176,8 +168,6 @@ test('set `exitOnError` to false in root', async t => {
 });
 
 test('set `exitOnError` to false in root and true in child', async t => {
-	t.plan(16);
-
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -222,7 +212,7 @@ test('set `exitOnError` to false in root and true in child', async t => {
 		'baz [started]',
 		'baz [completed]',
 		'done'
-	]);
+	], 16);
 
 	try {
 		await list.run();
@@ -235,8 +225,6 @@ test('set `exitOnError` to false in root and true in child', async t => {
 });
 
 test('exit on error throws error object with context', async t => {
-	t.plan(10);
-
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -260,7 +248,7 @@ test('exit on error throws error object with context', async t => {
 		'bar [started]',
 		'bar [completed]',
 		'done'
-	]);
+	], 10);
 
 	try {
 		await list.run();

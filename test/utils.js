@@ -1,8 +1,8 @@
 import test from 'ava';
 import {Observable as RxObservable} from 'rxjs';
 import ZenObservable from 'zen-observable';
-import Listr from '..';
 import {isListr, isObservable} from '../lib/utils';
+import Listr from '..';
 
 test('isListr', t => {
 	t.false(isListr(null));

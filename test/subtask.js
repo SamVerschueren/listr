@@ -1,7 +1,7 @@
 import test from 'ava';
-import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
+import Listr from '..';
 
 test('renderer class', async t => {
 	const list = new Listr([
