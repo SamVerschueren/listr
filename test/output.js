@@ -1,8 +1,8 @@
 import test from 'ava';
 import {Observable} from 'rxjs';
-import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
+import Listr from '..';
 
 test('output', async t => {
 	const list = new Listr([
