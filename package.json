@@ -10,7 +10,7 @@
 		"url": "github.com/SamVerschueren"
 	},
 	"engines": {
-		"node": ">=6"
+		"node": ">=8"
 	},
 	"scripts": {
 		"test": "clinton && xo && nyc ava",
