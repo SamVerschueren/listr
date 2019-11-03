@@ -55,7 +55,11 @@ test('throw error if task rejects', async t => {
 		}
 	], {renderer: 'silent'});
 
-	await t.throws(list.run(), 'foo bar');
+	const error = await t.throwsAsync(async () => {
+		await list.run();
+	});
+
+	t.is(error.message, 'foo bar');
 });
 
 test('throw error if task throws', async t => {
@@ -68,7 +72,11 @@ test('throw error if task throws', async t => {
 		}
 	], {renderer: 'silent'});
 
-	await t.throws(list.run(), 'foo bar');
+	const error = await t.throwsAsync(async () => {
+		await list.run();
+	});
+
+	t.is(error.message, 'foo bar');
 });
 
 test('throw error if task skip rejects', async t => {
@@ -80,7 +88,7 @@ test('throw error if task skip rejects', async t => {
 		}
 	], {renderer: 'silent'}, {renderer: 'silent'});
 
-	await t.throws(list.run(), 'skip foo');
+	await t.throwsAsync(list.run(), 'skip foo');
 });
 
 test('throw error if task skip throws', async t => {
@@ -94,7 +102,11 @@ test('throw error if task skip throws', async t => {
 		}
 	], {renderer: 'silent'});
 
-	await t.throws(list.run(), 'skip foo');
+	const error = await t.throwsAsync(async () => {
+		await list.run();
+	});
+
+	t.is(error.message, 'skip foo');
 });
 
 test('execute tasks', async t => {
@@ -105,7 +117,9 @@ test('execute tasks', async t => {
 		}
 	], {renderer: 'silent'});
 
-	await t.notThrows(list.run());
+	await t.notThrowsAsync(async () => {
+		await list.run();
+	});
 });
 
 test('add tasks', t => {

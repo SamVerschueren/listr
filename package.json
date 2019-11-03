@@ -68,15 +68,12 @@
 	"pre-commit": "lint:staged",
 	"xo": {
 		"rules": {
-			"prefer-destructuring": "off",
-			"ava/no-import-test-files": [
-				"error",
-				{
-					"files": [
-						"!test/fixtures"
-					]
-				}
-			]
+			"prefer-destructuring": "off"
 		}
+	},
+	"ava": {
+		"files": [
+			"!test/fixtures"
+		]
 	}
 }
