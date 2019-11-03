@@ -28,12 +28,13 @@ class Listr {
 			throw new TypeError('Expected an array of tasks');
 		}
 
-		this._options = Object.assign({
+		this._options = {
 			showSubtasks: true,
 			concurrent: false,
 			renderer: 'default',
-			nonTTYRenderer: 'verbose'
-		}, opts);
+			nonTTYRenderer: 'verbose',
+			...opts
+		};
 		this._tasks = [];
 
 		this.concurrency = 1;

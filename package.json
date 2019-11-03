@@ -68,7 +68,8 @@
 	"pre-commit": "lint:staged",
 	"xo": {
 		"rules": {
-			"prefer-destructuring": "off"
+			"prefer-destructuring": "off",
+			"promise/prefer-await-to-then": "off"
 		}
 	},
 	"ava": {
