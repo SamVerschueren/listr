@@ -410,6 +410,14 @@ Default: `true`
 
 Set to `false` if you don't want to stop the execution of other tasks when one or more tasks fail.
 
+##### failParentTaskOnErrors
+
+Type: `boolean`<br>
+Default: `true`
+
+Set to `false` if you don't want show failed state in parent task when a sub tasks fails.
+
+
 ##### renderer
 
 Type: `string` `object`<br>

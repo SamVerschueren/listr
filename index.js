@@ -32,7 +32,8 @@ class Listr {
 			showSubtasks: true,
 			concurrent: false,
 			renderer: 'default',
-			nonTTYRenderer: 'verbose'
+			nonTTYRenderer: 'verbose',
+			failParentTaskOnErrors: true
 		}, opts);
 		this._tasks = [];
 
@@ -98,10 +99,10 @@ class Listr {
 
 		return tasks
 			.then(() => {
-				if (errors.length > 0) {
-					const err = new ListrError('Something went wrong');
-					err.errors = errors;
-					throw err;
+				if (this._options.failParentTaskOnErrors && errors.length > 0) {
+					const error = new ListrError('Something went wrong');
+					error.errors = errors;
+					throw error;
 				}
 
 				this._renderer.end();

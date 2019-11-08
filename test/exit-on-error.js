@@ -175,6 +175,59 @@ test('set `exitOnError` to false in root', async t => {
 	}
 });
 
+test('set `exitOnError` to false in root, set `failParentTaskOnErrors` to false in child task and do not raise ListError', async t => {
+	t.plan(13);
+
+	const list = new Listr([
+		{
+			title: 'foo',
+			task: () => Promise.reject(new Error('Foo failed'))
+		},
+		{
+			title: 'bar',
+			task: () => {
+				return new Listr([
+					{
+						title: 'unicorn',
+						task: () => Promise.reject(new Error('Unicorn failed'))
+					},
+					{
+						title: 'rainbow',
+						task: () => Promise.resolve()
+					}
+				], {
+					failParentTaskOnErrors: false
+				});
+			}
+		},
+		{
+			title: 'baz',
+			task: () => Promise.resolve()
+		}
+	], {
+		exitOnError: false,
+		renderer: SimpleRenderer
+	});
+
+	testOutput(t, [
+		'foo [started]',
+		'foo [failed]',
+		'> Foo failed',
+		'bar [started]',
+		'unicorn [started]',
+		'unicorn [failed]',
+		'> Unicorn failed',
+		'rainbow [started]',
+		'rainbow [completed]',
+		'bar [completed]',
+		'baz [started]',
+		'baz [completed]',
+		'done'
+	]);
+
+	await list.run();
+});
+
 test('set `exitOnError` to false in root and true in child', async t => {
 	t.plan(16);
 
