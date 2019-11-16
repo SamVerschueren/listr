@@ -410,6 +410,13 @@ Default: `true`
 
 Set to `false` if you don't want to stop the execution of other tasks when one or more tasks fail.
 
+##### errorOnExit
+
+Type: `boolean`<br>
+Default: `true`
+
+Set to `false` if you don't want an error to be logged at the end of all tasks, if any of them has throwns an error
+
 ##### renderer
 
 Type: `string` `object`<br>
