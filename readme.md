@@ -298,7 +298,7 @@ tasks.run();
 
 ## Rendering options
 
-By default, [listr-update-renderer](https://github.com/SamVerschueren/listr-update-renderer) is active. This renderer refreshes the state of the tasks every 100 milliseconds. With the option ```suspendUpdateRenderer``` the refresh can be suspended for the time the task is running. After the task is completed, the listr-update-renderer starts again refreshing the state of the tasks.
+By default, the [`listr-update-renderer`](https://github.com/SamVerschueren/listr-update-renderer) renderer is used. The renderer updates the state of the tasks every 100ms. When the `suspendUpdateRenderer` option is supplied, the state updates can be suspended while the task is running. After the task is completed, the renderer will resume updating the state of the tasks.
 
 ```js
 const tasks = new Listr([
@@ -306,7 +306,7 @@ const tasks = new Listr([
 		title: 'Encrypt gpg-file',
 		task: () => execa('gpg', ['-e', 'file']),
 		options: {suspendUpdateRenderer: true}
-	}
+	},
 	{
 		title: 'Remove the unencrypted file',
 		task: () => execa('rm', ['file'])
@@ -316,7 +316,7 @@ const tasks = new Listr([
 tasks.run();
 ```
 
-This feature is usefull for tasks with user-input. The user-input is always gobbled up, when the listr-update-renderer is not in suspend-mode.
+The `suspendUpdateRenderer` option is useful for tasks which receive user input while running, as without it the input will be ignored by the renderer.
 
 ## Custom renderers
 

@@ -1,9 +1,9 @@
 import test from 'ava';
 import {Observable} from 'rxjs';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import TTYRenderer from './fixtures/tty-renderer';
 import {testOutput} from './fixtures/utils';
-import Listr from '..';
 
 const ttyOutput = [
 	'foo [started]',

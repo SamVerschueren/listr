@@ -1,7 +1,7 @@
 import {serial as test} from 'ava';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
-import Listr from '..';
 
 test('changing the title during task execution', async t => {
 	const list = new Listr([

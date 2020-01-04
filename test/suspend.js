@@ -4,14 +4,7 @@ import sinon from 'sinon';
 const mockery = require('mockery');
 
 const logUpdateApi = {
-	main(text) {
-		console.log(text);
-	}
-};
-logUpdateApi.main.clear = function () {
-};
-
-logUpdateApi.main.done = function () {
+	main: require('log-update')
 };
 
 const mock = sinon.mock(logUpdateApi);
@@ -56,13 +49,13 @@ test.before(() => {
 	mockery.enable({useCleanCache: true, warnOnUnregistered: false});
 });
 
+test.after(() => {
+	mockery.disable();
+	mockery.deregisterAll();
+});
+
 test('should suspend second task', async t => {
 	await getTasks().run();
 
 	t.true(mock.verify());
-});
-
-test.after(() => {
-	mockery.disable();
-	mockery.deregisterAll();
 });

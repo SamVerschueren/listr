@@ -2,9 +2,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import test from 'ava';
 import split from 'split';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
-import Listr from '..';
 
 test('output', async t => {
 	const list = new Listr([

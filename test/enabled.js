@@ -1,7 +1,7 @@
 import {serial as test} from 'ava';
+import Listr from '..';
 import SimpleRenderer from './fixtures/simple-renderer';
 import {testOutput} from './fixtures/utils';
-import Listr from '..';
 
 test('do not run disabled tasks', async t => {
 	const list = new Listr([

@@ -56,6 +56,7 @@
 		"hook-std": "^1.1.0",
 		"lint-staged": "^8.0.5",
 		"log-symbols": "^2.2.0",
+		"log-update": "^2.3.0",
 		"mockery": "^2.1.0",
 		"nyc": "^13.1.0",
 		"pre-commit": "^1.2.2",
