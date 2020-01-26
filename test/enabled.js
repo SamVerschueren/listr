@@ -1,9 +1,9 @@
-import {serial as test} from 'ava';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const test = require('ava');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
-test('do not run disabled tasks', async t => {
+test.serial('do not run disabled tasks', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -27,7 +27,7 @@ test('do not run disabled tasks', async t => {
 	await list.run();
 });
 
-test('run enabled task', async t => {
+test.serial('run enabled task', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',

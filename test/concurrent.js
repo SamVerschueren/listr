@@ -1,8 +1,8 @@
-import {serial as test} from 'ava';
-import delay from 'delay';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const test = require('ava');
+const delay = require('delay');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 const tasks = [
 	{
@@ -23,7 +23,7 @@ const tasks = [
 	}
 ];
 
-test('run tasks sequentially if concurrency is undefined', async t => {
+test.serial('run tasks sequentially if concurrency is undefined', async t => {
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer
 	});
@@ -43,7 +43,7 @@ test('run tasks sequentially if concurrency is undefined', async t => {
 	await list.run();
 });
 
-test('run tasks in parallel if concurrency is true', async t => {
+test.serial('run tasks in parallel if concurrency is true', async t => {
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer,
 		concurrent: true
@@ -64,7 +64,7 @@ test('run tasks in parallel if concurrency is true', async t => {
 	await list.run();
 });
 
-test('run tasks in sequential parallel chunks, if concurrency is a number', async t => {
+test.serial('run tasks in sequential parallel chunks, if concurrency is a number', async t => {
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer,
 		concurrent: 2

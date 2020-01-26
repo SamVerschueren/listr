@@ -1,9 +1,9 @@
-import test from 'ava';
-import Listr from '..';
+const test = require('ava');
+const Listr = require('..');
 
 test('create', t => {
 	t.notThrows(() => new Listr());
-	t.throws(() => new Listr('foo'), 'Expected an array of tasks');
+	t.throws(() => new Listr('foo'), {message: 'Expected an array of tasks'});
 
 	let list;
 
@@ -24,27 +24,27 @@ test('create', t => {
 });
 
 test('throw error if task properties are wrong', t => {
-	t.throws(() => new Listr([{}]), 'Expected property `title` to be of type `string`, got `undefined`');
-	t.throws(() => new Listr([{title: 5}]), 'Expected property `title` to be of type `string`, got `number`');
-	t.throws(() => new Listr([{title: 'foo'}]), 'Expected property `task` to be of type `function`, got `undefined`');
-	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), 'Expected property `task` to be of type `function`, got `string`');
-	t.throws(() => new Listr([{title: 'foo', task: () => {}, skip: 5}]), 'Expected property `skip` to be of type `function`, got `number`');
-	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), 'Expected property `enabled` to be of type `function`, got `number`');
+	t.throws(() => new Listr([{}]), {message: 'Expected property `title` to be of type `string`, got `undefined`'});
+	t.throws(() => new Listr([{title: 5}]), {message: 'Expected property `title` to be of type `string`, got `number`'});
+	t.throws(() => new Listr([{title: 'foo'}]), {message: 'Expected property `task` to be of type `function`, got `undefined`'});
+	t.throws(() => new Listr([{title: 'foo', task: 'bar'}]), {message: 'Expected property `task` to be of type `function`, got `string`'});
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, skip: 5}]), {message: 'Expected property `skip` to be of type `function`, got `number`'});
+	t.throws(() => new Listr([{title: 'foo', task: () => {}, enabled: 5}]), {message: 'Expected property `enabled` to be of type `function`, got `number`'});
 });
 
 test('throw error if a task object is provided', t => {
-	t.throws(() => new Listr({title: 'foo', task: () => {}}), 'Expected an array of tasks or an options object, got a task object');
+	t.throws(() => new Listr({title: 'foo', task: () => {}}), {message: 'Expected an array of tasks or an options object, got a task object'});
 });
 
 test('`.addTask()` throws if task properties are wrong', t => {
 	const list = new Listr();
-	t.throws(list.add.bind(list), 'Expected a task');
-	t.throws(list.add.bind(list, {}), 'Expected property `title` to be of type `string`, got `undefined`');
-	t.throws(list.add.bind(list, {title: 5}), 'Expected property `title` to be of type `string`, got `number`');
-	t.throws(list.add.bind(list, {title: 'foo'}), 'Expected property `task` to be of type `function`, got `undefined`');
-	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), 'Expected property `task` to be of type `function`, got `string`');
-	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, skip: 5}), 'Expected property `skip` to be of type `function`, got `number`');
-	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), 'Expected property `enabled` to be of type `function`, got `number`');
+	t.throws(list.add.bind(list), {message: 'Expected a task'});
+	t.throws(list.add.bind(list, {}), {message: 'Expected property `title` to be of type `string`, got `undefined`'});
+	t.throws(list.add.bind(list, {title: 5}), {message: 'Expected property `title` to be of type `string`, got `number`'});
+	t.throws(list.add.bind(list, {title: 'foo'}), {message: 'Expected property `task` to be of type `function`, got `undefined`'});
+	t.throws(list.add.bind(list, {title: 'foo', task: 'bar'}), {message: 'Expected property `task` to be of type `function`, got `string`'});
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, skip: 5}), {message: 'Expected property `skip` to be of type `function`, got `number`'});
+	t.throws(list.add.bind(list, {title: 'foo', task: () => {}, enabled: 5}), {message: 'Expected property `enabled` to be of type `function`, got `number`'});
 });
 
 test('throw error if task rejects', async t => {
@@ -88,7 +88,7 @@ test('throw error if task skip rejects', async t => {
 		}
 	], {renderer: 'silent'}, {renderer: 'silent'});
 
-	await t.throwsAsync(list.run(), 'skip foo');
+	await t.throwsAsync(list.run(), {message: 'skip foo'});
 });
 
 test('throw error if task skip throws', async t => {

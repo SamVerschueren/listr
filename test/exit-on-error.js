@@ -1,7 +1,7 @@
-import {serial as test} from 'ava';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const test = require('ava');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 const tasks = [
 	{
@@ -14,7 +14,7 @@ const tasks = [
 	}
 ];
 
-test('exit on error', async t => {
+test.serial('exit on error', async t => {
 	t.plan(5);
 
 	const list = new Listr(tasks, {
@@ -35,7 +35,7 @@ test('exit on error', async t => {
 	}
 });
 
-test('set `exitOnError` to false', async t => {
+test.serial('set `exitOnError` to false', async t => {
 	t.plan(8);
 
 	const list = new Listr(tasks, {
@@ -60,7 +60,7 @@ test('set `exitOnError` to false', async t => {
 	}
 });
 
-test('set `exitOnError` to false in nested list', async t => {
+test.serial('set `exitOnError` to false in nested list', async t => {
 	t.plan(15);
 
 	const list = new Listr([
@@ -117,7 +117,7 @@ test('set `exitOnError` to false in nested list', async t => {
 	}
 });
 
-test('set `exitOnError` to false in root', async t => {
+test.serial('set `exitOnError` to false in root', async t => {
 	t.plan(17);
 
 	const list = new Listr([
@@ -175,7 +175,7 @@ test('set `exitOnError` to false in root', async t => {
 	}
 });
 
-test('set `exitOnError` to false in root and true in child', async t => {
+test.serial('set `exitOnError` to false in root and true in child', async t => {
 	t.plan(16);
 
 	const list = new Listr([
@@ -234,7 +234,7 @@ test('set `exitOnError` to false in root and true in child', async t => {
 	}
 });
 
-test('exit on error throws error object with context', async t => {
+test.serial('exit on error throws error object with context', async t => {
 	t.plan(10);
 
 	const list = new Listr([

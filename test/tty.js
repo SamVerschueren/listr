@@ -1,9 +1,9 @@
-import test from 'ava';
-import {Observable} from 'rxjs';
-import SimpleRenderer from './fixtures/simple-renderer';
-import TTYRenderer from './fixtures/tty-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const test = require('ava');
+const {Observable} = require('rxjs');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const TTYRenderer = require('./fixtures/tty-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 const ttyOutput = [
 	'foo [started]',

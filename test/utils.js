@@ -1,8 +1,8 @@
-import test from 'ava';
-import {Observable as RxObservable} from 'rxjs';
-import ZenObservable from 'zen-observable';
-import {isListr, isObservable} from '../lib/utils';
-import Listr from '..';
+const test = require('ava');
+const {Observable: RxObservable} = require('rxjs');
+const ZenObservable = require('zen-observable');
+const {isListr, isObservable} = require('../lib/utils');
+const Listr = require('..');
 
 test('isListr', t => {
 	t.false(isListr(null));
@@ -10,6 +10,8 @@ test('isListr', t => {
 	t.false(isListr(() => {}));
 	t.true(isListr(new Listr([])));
 });
+
+console.log(isObservable(new RxObservable(() => {})));
 
 test('isObservable', t => {
 	t.false(isObservable(null));

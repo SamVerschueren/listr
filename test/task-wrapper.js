@@ -1,9 +1,9 @@
-import {serial as test} from 'ava';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const test = require('ava');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
-test('changing the title during task execution', async t => {
+test.serial('changing the title during task execution', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -23,7 +23,7 @@ test('changing the title during task execution', async t => {
 	await list.run();
 });
 
-test('changing the output during task execution', async t => {
+test.serial('changing the output during task execution', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -43,7 +43,7 @@ test('changing the output during task execution', async t => {
 	await list.run();
 });
 
-test('skip task during task execution with no message', async t => {
+test.serial('skip task during task execution with no message', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -62,7 +62,7 @@ test('skip task during task execution with no message', async t => {
 	await list.run();
 });
 
-test('skip task during task execution with message', async t => {
+test.serial('skip task during task execution with message', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
@@ -82,7 +82,7 @@ test('skip task during task execution with message', async t => {
 	await list.run();
 });
 
-test('skip subtask', async t => {
+test.serial('skip subtask', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',

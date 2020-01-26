@@ -1,10 +1,10 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import test from 'ava';
-import split from 'split';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
-import Listr from '..';
+const fs = require('fs');
+const path = require('path');
+const test = require('ava');
+const split = require('split');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 test('output', async t => {
 	const list = new Listr([
