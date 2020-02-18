@@ -1,17 +1,41 @@
-import {serial as test} from 'ava';
+import test from 'ava';
 import sinon from 'sinon';
-
-const mockery = require('mockery');
+import Listr from '..';
 
 const logUpdateApi = {
 	main: require('log-update')
 };
 
-const mock = sinon.mock(logUpdateApi);
+const render = tasks => {
+	const taskStatus = [];
+	for (const task of tasks) {
+		taskStatus.push({title: task.title, shouldSuspend: task.shouldSuspendUpdateRenderer(), completed: task.isCompleted()});
+	}
+
+	logUpdateApi.main(taskStatus);
+};
+
+class TaskRenderer {
+	constructor(tasks) {
+		this._tasks = tasks;
+	}
+
+	static get nonTTY() {
+		return true;
+	}
+
+	render() {
+		this._id = setInterval(() => {
+			render(this._tasks);
+		}, 100);
+	}
+
+	end() {
+		clearInterval(this._id);
+	}
+}
 
 function getTasks() {
-	// Require is necessary at this position, otherwise mockery is not working correctly
-	const Listr = require('..');
 	const tasks = new Listr([
 		{
 			title: 'not suspending task',
@@ -29,33 +53,37 @@ function getTasks() {
 				return new Promise(resolve => {
 					setTimeout(() => {
 						resolve('predefined output');
-					}, 4000);
+					}, 300);
 				});
 			},
 			options: {suspendUpdateRenderer: true}
+		},
+		{
+			title: 'last task',
+			task: () => {
+				return new Promise(resolve => {
+					setTimeout(() => {
+						resolve('predefined output');
+					}, 100);
+				});
+			}
 		}
-	]);
+	], {renderer: TaskRenderer});
 
 	return tasks;
 }
 
-test.before(() => {
-	/* One time for the first task,
-	   one time when both tasks are finished
-	*/
-	mock.expects('main').twice();
-	mockery.registerAllowable('..');
-	mockery.registerMock('log-update', logUpdateApi.main);
-	mockery.enable({useCleanCache: true, warnOnUnregistered: false});
-});
-
-test.after(() => {
-	mockery.disable();
-	mockery.deregisterAll();
-});
-
 test('should suspend second task', async t => {
+	const mock = sinon.mock(logUpdateApi);
+	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: false},
+		{title: 'suspending task', shouldSuspend: false, completed: false},
+		{title: 'last task', shouldSuspend: false, completed: false}]).once();
+	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: true},
+		{title: 'suspending task', shouldSuspend: true, completed: false},
+		{title: 'last task', shouldSuspend: false, completed: false}]).atLeast(1);
+	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: true},
+		{title: 'suspending task', shouldSuspend: false, completed: true},
+		{title: 'last task', shouldSuspend: false, completed: false}]).once();
 	await getTasks().run();
-
 	t.true(mock.verify());
 });
