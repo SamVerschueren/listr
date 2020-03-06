@@ -1,44 +1,12 @@
 import test from 'ava';
-import sinon from 'sinon';
-import Listr from '..';
-
-const logUpdateApi = {
-	main: require('log-update')
-};
-
-const render = tasks => {
-	const taskStatus = [];
-	for (const task of tasks) {
-		taskStatus.push({title: task.title, shouldSuspend: task.shouldSuspendUpdateRenderer(), completed: task.isCompleted()});
-	}
-
-	logUpdateApi.main(taskStatus);
-};
-
-class TaskRenderer {
-	constructor(tasks) {
-		this._tasks = tasks;
-	}
-
-	static get nonTTY() {
-		return true;
-	}
-
-	render() {
-		this._id = setInterval(() => {
-			render(this._tasks);
-		}, 100);
-	}
-
-	end() {
-		clearInterval(this._id);
-	}
-}
+import mockery from 'mockery';
+import elegantSpinner from 'elegant-spinner';
 
 function getTasks() {
+	const Listr = require('..');
 	const tasks = new Listr([
 		{
-			title: 'not suspending task',
+			title: 'first',
 			task: () => {
 				return new Promise(resolve => {
 					setTimeout(() => {
@@ -48,7 +16,7 @@ function getTasks() {
 			}
 		},
 		{
-			title: 'suspending task',
+			title: 'second',
 			task: () => {
 				return new Promise(resolve => {
 					setTimeout(() => {
@@ -59,7 +27,7 @@ function getTasks() {
 			options: {suspendUpdateRenderer: true}
 		},
 		{
-			title: 'last task',
+			title: 'last',
 			task: () => {
 				return new Promise(resolve => {
 					setTimeout(() => {
@@ -68,22 +36,35 @@ function getTasks() {
 				});
 			}
 		}
-	], {renderer: TaskRenderer});
+	]);
 
 	return tasks;
 }
 
-test('should suspend second task', async t => {
-	const mock = sinon.mock(logUpdateApi);
-	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: false},
-		{title: 'suspending task', shouldSuspend: false, completed: false},
-		{title: 'last task', shouldSuspend: false, completed: false}]).once();
-	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: true},
-		{title: 'suspending task', shouldSuspend: true, completed: false},
-		{title: 'last task', shouldSuspend: false, completed: false}]).atLeast(1);
-	mock.expects('main').withExactArgs([{title: 'not suspending task', shouldSuspend: false, completed: true},
-		{title: 'suspending task', shouldSuspend: false, completed: true},
-		{title: 'last task', shouldSuspend: false, completed: false}]).once();
+test('should not erase output from suspended task, as long as this task is running', async t => {
+	const countOutputIsErasedWhenTaskRunning = {first: 0, second: 0, last: 0};
+
+	const logUpdate = output => {
+		const taskPendingPattern = new RegExp(elegantSpinner.frames.join('|'));
+		const tasks = output.split('\n');
+		for (const task of tasks) {
+			if (task.search(taskPendingPattern) > 0) {
+				const title = task.match(/first|second|last/);
+				countOutputIsErasedWhenTaskRunning[title]++;
+			}
+		}
+	};
+
+	logUpdate.done = () => {};
+
+	mockery.registerAllowable('..');
+	mockery.registerMock('log-update', logUpdate);
+	mockery.enable({useCleanCache: true, warnOnUnregistered: false});
+
 	await getTasks().run();
-	t.true(mock.verify());
+
+	mockery.deregisterAll();
+	mockery.disable();
+
+	t.deepEqual(countOutputIsErasedWhenTaskRunning, {first: 1, second: 0, last: 1});
 });
