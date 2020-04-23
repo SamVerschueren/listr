@@ -14,13 +14,13 @@ const runTask = (task, context, errors) => {
 };
 
 class Listr {
-	constructor(tasks, opts) {
+	constructor(tasks, options) {
 		if (tasks && !Array.isArray(tasks) && typeof tasks === 'object') {
 			if (typeof tasks.title === 'string' && typeof tasks.task === 'function') {
 				throw new TypeError('Expected an array of tasks or an options object, got a task object');
 			}
 
-			opts = tasks;
+			options = tasks;
 			tasks = [];
 		}
 
@@ -33,7 +33,7 @@ class Listr {
 			concurrent: false,
 			renderer: 'default',
 			nonTTYRenderer: 'verbose',
-			...opts
+			...options
 		};
 		this._tasks = [];
 

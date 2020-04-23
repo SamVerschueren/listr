@@ -11,8 +11,6 @@ test('isListr', t => {
 	t.true(isListr(new Listr([])));
 });
 
-console.log(isObservable(new RxObservable(() => {})));
-
 test('isObservable', t => {
 	t.false(isObservable(null));
 	t.false(isObservable({}));
