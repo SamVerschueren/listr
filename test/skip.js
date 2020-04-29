@@ -1,7 +1,7 @@
-import test from 'ava';
-import Listr from '..';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
+const test = require('ava');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 test('continue execution if skip() returns false or Promise for false', async t => {
 	t.plan(5); // Verify the correct number of tasks were executed
