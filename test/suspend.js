@@ -1,6 +1,6 @@
-import test from 'ava';
-import mockery from 'mockery';
-import elegantSpinner from 'elegant-spinner';
+const test = require('ava');
+const mockery = require('mockery');
+const elegantSpinner = require('elegant-spinner');
 
 function getTasks() {
 	const Listr = require('..');
@@ -37,6 +37,7 @@ function getTasks() {
 			}
 		}
 	]);
+	tasks.setRenderer(require('./fixtures/update-renderer'));
 
 	return tasks;
 }

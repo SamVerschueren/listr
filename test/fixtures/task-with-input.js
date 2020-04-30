@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const Listr = require('../..');
+const updateRenderer = require('./update-renderer');
 
 function getTasks(suspendUpdateRenderer) {
 	const task = () => {
@@ -17,13 +18,15 @@ function getTasks(suspendUpdateRenderer) {
 		});
 	};
 
-	return new Listr([
+	const result = new Listr([
 		{
 			title: `receive user input from task with renderer is ${suspendUpdateRenderer ? 'suspended' : 'running'}`,
 			task,
 			options: {suspendUpdateRenderer}
 		}
 	]);
+	result.setRenderer(updateRenderer);
+	return result;
 }
 
 (async () => {

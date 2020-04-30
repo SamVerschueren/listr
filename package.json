@@ -10,7 +10,7 @@
 		"url": "github.com/SamVerschueren"
 	},
 	"engines": {
-		"node": ">=6"
+		"node": ">=10"
 	},
 	"scripts": {
 		"test": "clinton && xo && nyc ava",
@@ -39,12 +39,12 @@
 	],
 	"dependencies": {
 		"@samverschueren/stream-to-observable": "^0.3.0",
-		"is-observable": "^1.1.0",
+		"is-observable": "^2.0.0",
 		"is-promise": "^2.1.0",
 		"is-stream": "^1.1.0",
 		"listr-silent-renderer": "^1.1.1",
 		"listr-update-renderer": "^0.5.0",
-		"listr-verbose-renderer": "^0.5.0",
+		"listr-verbose-renderer": "^0.6.0",
 		"p-map": "^2.0.0",
 		"rxjs": "^6.3.3"
 	},
@@ -70,7 +70,13 @@
 	"pre-commit": "lint:staged",
 	"xo": {
 		"rules": {
-			"prefer-destructuring": "off"
+			"prefer-destructuring": "off",
+			"promise/prefer-await-to-then": "off"
 		}
+	},
+	"ava": {
+		"files": [
+			"!test/fixtures"
+		]
 	}
 }

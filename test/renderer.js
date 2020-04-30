@@ -1,7 +1,7 @@
-import test from 'ava';
-import Listr from '..';
-import SimpleRenderer from './fixtures/simple-renderer';
-import {testOutput} from './fixtures/utils';
+const test = require('ava');
+const SimpleRenderer = require('./fixtures/simple-renderer');
+const {testOutput} = require('./fixtures/utils');
+const Listr = require('..');
 
 test('renderer class', async t => {
 	const list = new Listr([
