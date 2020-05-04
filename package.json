@@ -12,13 +12,10 @@
 	"workspaces": [
 		"packages/*"
 	],
-	"engines": {
-		"node": ">=10"
-	},
 	"scripts": {
 		"build": "tsc -b",
 		"build:watch": "tsc -b -w",
-		"lint": "eslint .",
+		"lint": "eslint . --ext=js,ts",
 		"test": "jest",
 		"test:ci": "yarn lint && yarn test",
 		"lint:staged": "lint-staged"
@@ -49,7 +46,8 @@
 		"zen-observable": "^0.8.15"
 	},
 	"lint-staged": {
-		"*.ts": "eslint . --ext=ts"
+    "*.ts": "eslint . --ext=ts",
+    "*.js": "eslint . --ext=js"
 	},
 	"pre-commit": "lint:staged"
 }
