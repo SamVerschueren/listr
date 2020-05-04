@@ -1,0 +1,17 @@
+{
+	"name": "listr-silent-renderer",
+	"version": "0.15.0",
+	"description": "Listr silent renderer",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": ["lib"],
+  "repository": "SamVerschueren/listr",
+  "dependencies": {
+    "listr-core": "0.15.0"
+  },
+	"author": {
+		"name": "Sam Verschueren",
+		"email": "sam.verschueren@gmail.com",
+		"url": "https://github.com/SamVerschueren"
+	}
+}

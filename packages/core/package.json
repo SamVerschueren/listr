@@ -1,0 +1,19 @@
+{
+	"name": "listr-core",
+	"version": "0.15.0",
+	"description": "Listr core",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": ["lib"],
+	"repository": "SamVerschueren/listr",
+	"author": {
+		"name": "Marco Scabbiolo",
+		"email": "scabbiolo.marco@gmail.com",
+		"url": "https://github.com/MarcoScabbiolo"
+  },
+  "dependencies": {
+    "is-promise": "^4.0.0",
+    "is-stream": "^2.0.0",
+    "@samverschueren/stream-to-observable": "^0.3.0"
+  }
+}
