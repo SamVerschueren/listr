@@ -134,12 +134,12 @@
         "signature": "5ac6404ddc5d622905e131dbc5da0362a82e89d1cb97cc8256bf06ca9fad4b24"
       },
       "./src/symbols.ts": {
-        "version": "42a078c8ee7308a9febdbff438e2838b21fa5091c73b03dedc6506da5d470467",
+        "version": "2fde4e68b0042ba5f5b356616c419d512b3e1e25a62367b0fc29fcc389de3721",
         "signature": "d4c5f7575f9d6ee065d81dcb52c8fa613f935af28e9c75b8156c0100a63f6bf1"
       },
       "./src/listrinstance.ts": {
-        "version": "b779032b0ce0c94658986c5838ea8d31e02a2db6181ea438e01096fe7a975cff",
-        "signature": "b6a904c74c1fd6ff6e3f9d65f79c5cffc44a7bcf830df5f24cad464a61327477"
+        "version": "2e6d88ffdba5fe0e9b51aa6875092b7793172caf93baeb8290c4bd5dd510a40c",
+        "signature": "f20af88e977250f8ae000d3166795a6ff971328d7cb4c055a2ab7195c2b05622"
       },
       "./src/listrerror.ts": {
         "version": "a0d739a1acc276e9057221ea8c40f0ed6ac8af8e813edc5b6536c82ffbd9acd1",
@@ -2577,14 +2577,14 @@
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
       "../../node_modules/@types/zen-observable/index.d.ts",
-      "./src/taskdefinition.ts",
-      "./src/utils.ts",
-      "./src/listrerror.ts",
       "./src/listrinstance.ts",
-      "./src/options.ts",
-      "./src/task.ts",
+      "./src/index.ts",
       "./src/baserenderer.ts",
-      "./src/index.ts"
+      "./src/task.ts",
+      "./src/options.ts",
+      "./src/utils.ts",
+      "./src/taskdefinition.ts",
+      "./src/listrerror.ts"
     ]
   },
   "version": "3.8.3"

@@ -4,7 +4,7 @@ import Task from './Task'
 export type DefaultContext = {}
 
 export interface ListrInstance<TContext = DefaultContext> {
-  [IS_LISTR_INSTANCE]: boolean
+  [IS_LISTR_INSTANCE]?: boolean
 
   tasks: Task<TContext>[]
 
