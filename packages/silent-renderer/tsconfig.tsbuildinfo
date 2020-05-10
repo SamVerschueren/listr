@@ -346,8 +346,8 @@
         "signature": "cd4f9b24cdedd38aa73153fe31a85e5f1e4863d3b4da3a809471f7416db73da8"
       },
       "../core/lib/task.d.ts": {
-        "version": "cc37f8ac9ac193ca4baadf59002a386de594a29be01cfcae91c355bffa98a20f",
-        "signature": "cc37f8ac9ac193ca4baadf59002a386de594a29be01cfcae91c355bffa98a20f"
+        "version": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86",
+        "signature": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86"
       },
       "../core/lib/baserenderer.d.ts": {
         "version": "b3961ad51a71ca0615863e4ca9fa5ea4a8a5049d9c7329fd380ec2ec4424ff84",
@@ -2570,12 +2570,12 @@
       "../../node_modules/@types/zen-observable/index.d.ts",
       "../core/lib/task.d.ts",
       "../core/lib/index.d.ts",
-      "./src/index.ts",
       "../core/lib/baserenderer.d.ts",
       "../core/lib/taskdefinition.d.ts",
       "../core/lib/listrinstance.d.ts",
       "../core/lib/options.d.ts",
-      "../core/lib/listrerror.d.ts"
+      "../core/lib/listrerror.d.ts",
+      "./src/index.ts"
     ]
   },
   "version": "3.8.3"

@@ -4,7 +4,7 @@ const Observable = require('rxjs').Observable
 const logSymbols = require('log-symbols')
 const delay = require('delay')
 
-const Listr = require('.')
+const Listr = require('./packages/listr/lib')
 
 const renderer = process.argv[2]
 

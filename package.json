@@ -17,8 +17,9 @@
 		"build:watch": "tsc -b -w",
 		"lint": "eslint . --ext=js,ts",
 		"test": "jest",
-		"test:ci": "yarn lint && yarn test",
-		"lint:staged": "lint-staged"
+		"test:ci": "yarn build && yarn lint && yarn test",
+    "lint:staged": "lint-staged",
+    "postinstall": "yarn build"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.6",

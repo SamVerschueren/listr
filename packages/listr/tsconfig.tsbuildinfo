@@ -350,8 +350,8 @@
         "signature": "cd4f9b24cdedd38aa73153fe31a85e5f1e4863d3b4da3a809471f7416db73da8"
       },
       "../core/lib/task.d.ts": {
-        "version": "cc37f8ac9ac193ca4baadf59002a386de594a29be01cfcae91c355bffa98a20f",
-        "signature": "cc37f8ac9ac193ca4baadf59002a386de594a29be01cfcae91c355bffa98a20f"
+        "version": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86",
+        "signature": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86"
       },
       "../core/lib/baserenderer.d.ts": {
         "version": "b3961ad51a71ca0615863e4ca9fa5ea4a8a5049d9c7329fd380ec2ec4424ff84",
@@ -382,7 +382,7 @@
         "signature": "52f41e734a2ca2e35f54e080f34a953e15f24b76ba18fc8d47bdb386e49c24c7"
       },
       "./src/index.ts": {
-        "version": "15b5aa75749a5118d367229f52448c273f27c3062cad75bf0b56ef19e9f1fddd",
+        "version": "8483d2a57da585b942f1c192746d6cb31a1ed3ade381a7a433144df4f856e9d6",
         "signature": "48851af2d184b4e275f041f220a89136c1c595b66b00281a2311d2c010ba8ae7"
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {

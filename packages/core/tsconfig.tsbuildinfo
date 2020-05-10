@@ -362,8 +362,8 @@
         "signature": "cd4f9b24cdedd38aa73153fe31a85e5f1e4863d3b4da3a809471f7416db73da8"
       },
       "./src/task.ts": {
-        "version": "7d19ff269a10a5352d6a3b04efe797787af355731165f7fa9b5cd40705ea867d",
-        "signature": "cc37f8ac9ac193ca4baadf59002a386de594a29be01cfcae91c355bffa98a20f"
+        "version": "06b47073078f78d0b0540be562ad0ea2f5f2c6f5da2b3e47e7a686ee7606fcef",
+        "signature": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86"
       },
       "./src/baserenderer.ts": {
         "version": "405dd03658597da41560b2a4a8085a331da2457b4a1f8c1d335f578e59dbd8b1",

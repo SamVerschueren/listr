@@ -4,3 +4,4 @@ lib
 lerna-debug.log
 package-lock.json
 yarn-error.log
+tsconfig.tsbuildinfo

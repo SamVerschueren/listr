@@ -144,12 +144,14 @@ export default class Task<TContext = DefaultContext>
     for (const observer of this.subscriptions) {
       observer?.complete?.()
     }
+    this.clearSubscriptions()
   }
 
   public error(error: Error): void {
     for (const observer of this.subscriptions) {
       observer?.error?.(error)
     }
+    this.clearSubscriptions()
   }
 
   public subscribe(
@@ -322,4 +324,8 @@ export default class Task<TContext = DefaultContext>
   protected _output?: string
   protected _state: ListrState
   protected subscriptions: ListrObserver<ListrEvent>[]
+
+  protected clearSubscriptions(): void {
+    this.subscriptions = []
+  }
 }

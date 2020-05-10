@@ -172,3 +172,5 @@ export default class Listr<TContext = DefaultContext>
     }
   }
 }
+
+module.exports = Listr
