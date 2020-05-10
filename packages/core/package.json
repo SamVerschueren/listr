@@ -5,7 +5,10 @@
   "license": "MIT",
   "main": "lib/index.js",
   "files": ["lib"],
-	"repository": "SamVerschueren/listr",
+  "repository": "SamVerschueren/listr",
+  "engines": {
+		"node": ">=12"
+	},
 	"author": {
 		"name": "Marco Scabbiolo",
 		"email": "scabbiolo.marco@gmail.com",

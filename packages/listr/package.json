@@ -10,7 +10,7 @@
 		"url": "https://github.com/SamVerschueren"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"files": [
 		"lib"
