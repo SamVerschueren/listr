@@ -25,6 +25,7 @@
 		"@babel/preset-env": "^7.9.6",
 		"@babel/preset-typescript": "^7.9.0",
 		"@types/jest": "^25.2.1",
+		"@types/split": "^1.0.0",
 		"@types/zen-observable": "^0.8.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
@@ -46,8 +47,8 @@
 		"zen-observable": "^0.8.15"
 	},
 	"lint-staged": {
-    "*.ts": "eslint . --ext=ts",
-    "*.js": "eslint . --ext=js"
+		"*.ts": "eslint . --ext=ts --fix",
+		"*.js": "eslint . --ext=js --fix"
 	},
 	"pre-commit": "lint:staged"
 }

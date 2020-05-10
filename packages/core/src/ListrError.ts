@@ -1,9 +1,12 @@
-export default class ListrError extends Error {
-	constructor(message: string) {
-		super(message)
-		this.name = 'ListrError'
-		this.errors = []
-	}
+import { DefaultContext } from './ListrInstance'
 
-	public errors: Error[]
+export default class ListrError<TContext = DefaultContext> extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ListrError'
+    this.errors = []
+  }
+
+  public errors: Error[]
+  public context?: TContext
 }

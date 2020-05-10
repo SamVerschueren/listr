@@ -3,32 +3,17 @@ import { Observable } from 'rxjs'
 import Listr from '../src'
 
 import SimpleRenderer from './SimpleRenderer'
-import TTYRenderer from './TTYRenderer'
 import { makeTestOutput } from './utils'
-
-const ttyOutput = [
-  'foo [started]',
-  'bar [started]',
-  '> foo',
-  '> bar',
-  'bar [completed]',
-  'foo [completed]',
-  'tty done',
-]
-
-const nonTTYOutput = [
-  'foo [started]',
-  'bar [started]',
-  '> foo',
-  '> bar',
-  'bar [completed]',
-  'foo [completed]',
-  'done',
-]
 
 it('output', async () => {
   const testOutput = makeTestOutput(
-    ...(process.stdout.isTTY ? ttyOutput : nonTTYOutput)
+    'foo [started]',
+    'bar [started]',
+    '> foo',
+    '> bar',
+    'bar [completed]',
+    'foo [completed]',
+    'done'
   )
 
   await new Listr(
@@ -40,7 +25,7 @@ it('output', async () => {
             {
               title: 'bar',
               task: () => {
-                return new Observable<string>((observer) => {
+                return new Observable((observer) => {
                   observer.next('foo')
                   observer.next('bar')
                   observer.complete()
@@ -51,10 +36,7 @@ it('output', async () => {
         },
       },
     ],
-    {
-      renderer: TTYRenderer,
-      nonTTYRenderer: SimpleRenderer,
-    }
+    { renderer: SimpleRenderer }
   ).run()
 
   testOutput()

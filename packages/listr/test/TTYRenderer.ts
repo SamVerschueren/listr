@@ -3,13 +3,13 @@ import { DefaultContext } from 'listr-core'
 import SimpleRenderer from './SimpleRenderer'
 
 export default class TTYRenderer<
-	TContext = DefaultContext
+  TContext = DefaultContext
 > extends SimpleRenderer<TContext> {
-	static get nonTTY() {
-		return false
-	}
+  static get nonTTY() {
+    return false
+  }
 
-	end() {
-		console.log('tty done')
-	}
+  end() {
+    console.log('tty done')
+  }
 }

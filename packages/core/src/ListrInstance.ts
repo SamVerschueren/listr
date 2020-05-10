@@ -4,10 +4,10 @@ import Task from './task'
 export type DefaultContext = {}
 
 export interface ListrInstance<TContext = DefaultContext> {
-	[IS_LISTR_INSTANCE]: boolean
+  [IS_LISTR_INSTANCE]: boolean
 
-	tasks: Task<TContext>[]
+  tasks: Task<TContext>[]
 
-	setParentTask(task: Task<TContext>): void
-	run(context: TContext): Promise<TContext>
+  setParentTask(task: Task<TContext>): void
+  run(context: TContext): Promise<TContext>
 }

@@ -1,11 +1,11 @@
 declare module '@samverschueren/stream-to-observable' {
-	import { Stream } from 'stream'
+  import { Stream } from 'stream'
 
-	export interface StreamToObservable {
-		<TObservable>(stream: Stream): TObservable
-	}
+  export interface StreamToObservable {
+    <TObservable>(stream: Stream): TObservable
+  }
 
-	const fn: StreamToObservable
+  const fn: StreamToObservable
 
-	export default fn
+  export default fn
 }
