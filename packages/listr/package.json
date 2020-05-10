@@ -1,0 +1,43 @@
+{
+	"name": "listr",
+	"version": "0.15.0",
+	"description": "Terminal task list",
+	"license": "MIT",
+	"repository": "SamVerschueren/listr",
+	"author": {
+		"name": "Sam Verschueren",
+		"email": "sam.verschueren@gmail.com",
+		"url": "https://github.com/SamVerschueren"
+	},
+	"engines": {
+		"node": ">=12"
+	},
+	"files": [
+		"lib"
+  ],
+  "main": "lib/index.js",
+	"keywords": [
+		"cli",
+		"task",
+		"list",
+		"tasklist",
+		"terminal",
+		"term",
+		"console",
+		"ascii",
+		"unicode",
+		"loading",
+		"indicator",
+		"progress",
+		"busy",
+		"wait",
+		"idle"
+	],
+	"dependencies": {
+    "listr-core": "0.15.0",
+		"listr-silent-renderer": "0.15.0",
+		"listr-update-renderer": "0.15.0",
+		"listr-verbose-renderer": "0.15.0",
+		"p-map": "^2.0.0"
+	}
+}

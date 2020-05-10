@@ -1,0 +1,21 @@
+{
+	"name": "listr-verbose-renderer",
+	"version": "0.15.0",
+	"description": "Listr verbose renderer",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": ["lib"],
+	"repository": "SamVerschueren/listr",
+	"author": {
+		"name": "Sam Verschueren",
+		"email": "sam.verschueren@gmail.com",
+		"url": "https://github.com/SamVerschueren"
+  },
+  "dependencies": {
+    "listr-core": "0.15.0",
+		"chalk": "^4.0.0",
+		"cli-cursor": "^3.1.0",
+		"date-fns": "^2.12.0",
+		"figures": "^3.2.0"
+	}
+}

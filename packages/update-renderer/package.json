@@ -1,0 +1,25 @@
+{
+	"name": "listr-update-renderer",
+	"version": "0.15.0",
+	"description": "Listr update renderer",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": ["lib"],
+	"repository": "SamVerschueren/listr",
+	"author": {
+		"name": "Sam Verschueren",
+		"email": "sam.verschueren@gmail.com",
+		"url": "https://github.com/SamVerschueren"
+  },
+  "dependencies": {
+    "listr-core": "0.15.0",
+		"chalk": "^4.0.0",
+		"cli-truncate": "^2.1.0",
+		"elegant-spinner": "^2.0.0",
+		"figures": "^2.0.0",
+		"indent-string": "^4.0.0",
+		"log-symbols": "^4.0.0",
+		"log-update": "^4.0.0",
+		"strip-ansi": "^6.0.0"
+	}
+}

@@ -1,2 +1,7 @@
 node_modules
 .nyc_output
+lib
+lerna-debug.log
+package-lock.json
+yarn-error.log
+tsconfig.tsbuildinfo

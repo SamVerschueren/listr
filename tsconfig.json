@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/update-renderer" },
+    { "path": "./packages/silent-renderer" },
+    { "path": "./packages/verbose-renderer" },
+    { "path": "./packages/listr" },
+  ]
+}
