@@ -14,7 +14,7 @@ import { tryCastListrInstance, isStream, isObservable } from './utils'
 import type { DefaultContext } from './ListrInstance'
 import type { ListrObservable, ListrObserver } from './Observable'
 import type { ListrEvent } from './Event'
-import ListrState from './state'
+import ListrState from './State'
 import { ListrOptions } from './Options'
 
 const defaultSkipFn = () => false

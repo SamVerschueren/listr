@@ -138,8 +138,8 @@
         "signature": "d4c5f7575f9d6ee065d81dcb52c8fa613f935af28e9c75b8156c0100a63f6bf1"
       },
       "./src/listrinstance.ts": {
-        "version": "de2ab2db94a7e3f4d34c05b77542ff1f0e062f991c0774597ed5422c4912d88f",
-        "signature": "666711881155b74a370fc56d172e5426941cbd08f192e3b5d16a6c233a4534b5"
+        "version": "b779032b0ce0c94658986c5838ea8d31e02a2db6181ea438e01096fe7a975cff",
+        "signature": "b6a904c74c1fd6ff6e3f9d65f79c5cffc44a7bcf830df5f24cad464a61327477"
       },
       "./src/listrerror.ts": {
         "version": "a0d739a1acc276e9057221ea8c40f0ed6ac8af8e813edc5b6536c82ffbd9acd1",
@@ -150,8 +150,8 @@
         "signature": "6695c612b3feadd18510f0dbea3e8af2b56dee9b6ce7a3748a5cb72ef5aa72e1"
       },
       "./src/taskdefinition.ts": {
-        "version": "a04be8cd800fbc7b36232a966ff2e15f8d856e07b207236c360cec30b7822bcc",
-        "signature": "9fee79accb1afa69186fd4c8cbc29921fc56d79d7f5ffb6653466d0d7079de3d"
+        "version": "75d4ac6e10e1d9ccd0fab9d35100ba487e6a30494dd7a447b56fe222096df6e0",
+        "signature": "db02240c08a0c9bc472af0824566b994905a5446a20d22ac7f3e276b846f991b"
       },
       "../../node_modules/@types/node/globals.d.ts": {
         "version": "9d0b32c595a2e0d320a56b3d0e8f0a317e4149239ec913aa8f11eeb73edc92be",
@@ -362,12 +362,12 @@
         "signature": "cd4f9b24cdedd38aa73153fe31a85e5f1e4863d3b4da3a809471f7416db73da8"
       },
       "./src/task.ts": {
-        "version": "06b47073078f78d0b0540be562ad0ea2f5f2c6f5da2b3e47e7a686ee7606fcef",
-        "signature": "2c44727ce45616716aa3317365fe1d528bf3ca3be79cffc145417703e375de86"
+        "version": "9a4113e7e73a2179f6e71e068c7effc73d8ae09cbf3dc055df79d2c8b4dd8fbe",
+        "signature": "b551823474ea7272513fc4c00b8e6bcd3a5cd8bbf672db595d64173c4a60a8cb"
       },
       "./src/baserenderer.ts": {
-        "version": "405dd03658597da41560b2a4a8085a331da2457b4a1f8c1d335f578e59dbd8b1",
-        "signature": "b3961ad51a71ca0615863e4ca9fa5ea4a8a5049d9c7329fd380ec2ec4424ff84"
+        "version": "39ba992bec2c48a04cf0128bbf05634a14f08de281bc31665dc19e991a638e0c",
+        "signature": "281d3ef3a215ce8bc9904ffcd91055a6be65166b74aa96bbd0a86abcb78f6fbc"
       },
       "./src/index.ts": {
         "version": "f8004b044ddb48498d06fa95eb536d35b00d4983023399b38b7c7264f72c2231",
@@ -515,10 +515,10 @@
       "moduleResolution": 2,
       "declaration": true,
       "strict": true,
+      "forceConsistentCasingInFileNames": true,
       "composite": true,
       "rootDir": "./src",
       "outDir": "./lib",
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -2493,10 +2493,7 @@
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/is-promise/index.d.ts",
       "./src/symbols.ts",
-      "./src/listrinstance.ts",
-      "./src/listrerror.ts",
       "./src/observable.ts",
-      "./src/taskdefinition.ts",
       "../../node_modules/@types/node/globals.d.ts",
       "../../node_modules/@types/node/async_hooks.d.ts",
       "../../node_modules/@types/node/buffer.d.ts",
@@ -2545,12 +2542,8 @@
       "../../node_modules/@types/node/assert.d.ts",
       "../../node_modules/@types/node/ts3.2/index.d.ts",
       "../../node_modules/is-stream/index.d.ts",
-      "./src/utils.ts",
       "./src/event.ts",
       "./src/state.ts",
-      "./src/options.ts",
-      "./src/baserenderer.ts",
-      "./src/index.ts",
       "./src/@types/stream-to-observable.d.ts",
       "../../node_modules/@babel/types/lib/index.d.ts",
       "../../node_modules/@types/babel__generator/index.d.ts",
@@ -2584,7 +2577,14 @@
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
       "../../node_modules/@types/zen-observable/index.d.ts",
-      "./src/task.ts"
+      "./src/taskdefinition.ts",
+      "./src/utils.ts",
+      "./src/listrerror.ts",
+      "./src/listrinstance.ts",
+      "./src/options.ts",
+      "./src/task.ts",
+      "./src/baserenderer.ts",
+      "./src/index.ts"
     ]
   },
   "version": "3.8.3"

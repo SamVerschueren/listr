@@ -1,6 +1,6 @@
 import type { Stream } from 'stream'
 
-import Task from './task'
+import Task from './Task'
 import type { ListrObservable } from './Observable'
 import type { DefaultContext, ListrInstance } from './ListrInstance'
 

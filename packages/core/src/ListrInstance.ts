@@ -1,5 +1,5 @@
 import { IS_LISTR_INSTANCE } from './symbols'
-import Task from './task'
+import Task from './Task'
 
 export type DefaultContext = {}
 

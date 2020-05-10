@@ -1,4 +1,4 @@
-import Task from './task'
+import Task from './Task'
 import { ListrOptions } from './Options'
 import { DefaultContext } from './ListrInstance'
 
