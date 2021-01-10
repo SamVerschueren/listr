@@ -38,7 +38,7 @@
 		"idle"
 	],
 	"dependencies": {
-		"@samverschueren/stream-to-observable": "^0.3.0",
+		"@samverschueren/stream-to-observable": "^0.3.1",
 		"is-observable": "^2.0.0",
 		"is-promise": "^2.1.0",
 		"is-stream": "^1.1.0",
