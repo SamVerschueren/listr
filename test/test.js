@@ -1,5 +1,5 @@
-const test = require('ava');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
 
 test('create', t => {
 	t.notThrows(() => new Listr());
@@ -51,8 +51,8 @@ test('throw error if task rejects', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('foo bar'))
-		}
+			task: () => Promise.reject(new Error('foo bar')),
+		},
 	], {renderer: 'silent'});
 
 	const error = await t.throwsAsync(async () => {
@@ -68,8 +68,8 @@ test('throw error if task throws', async t => {
 			title: 'foo',
 			task: () => {
 				throw new Error('foo bar');
-			}
-		}
+			},
+		},
 	], {renderer: 'silent'});
 
 	const error = await t.throwsAsync(async () => {
@@ -84,8 +84,8 @@ test('throw error if task skip rejects', async t => {
 		{
 			title: 'foo',
 			skip: () => Promise.reject(new Error('skip foo')),
-			task: () => {}
-		}
+			task: () => {},
+		},
 	], {renderer: 'silent'}, {renderer: 'silent'});
 
 	await t.throwsAsync(list.run(), {message: 'skip foo'});
@@ -98,8 +98,8 @@ test('throw error if task skip throws', async t => {
 			skip: () => {
 				throw new Error('skip foo');
 			},
-			task: () => {}
-		}
+			task: () => {},
+		},
 	], {renderer: 'silent'});
 
 	const error = await t.throwsAsync(async () => {
@@ -113,8 +113,8 @@ test('execute tasks', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.resolve('bar')
-		}
+			task: () => Promise.resolve('bar'),
+		},
 	], {renderer: 'silent'});
 
 	await t.notThrowsAsync(async () => {
@@ -127,7 +127,7 @@ test('add tasks', t => {
 		.add({title: 'foo', task: () => {}})
 		.add([
 			{title: 'hello', task: () => {}},
-			{title: 'world', task: () => {}}
+			{title: 'world', task: () => {}},
 		])
 		.add({title: 'bar', task: () => {}});
 
@@ -140,20 +140,20 @@ test('context', async t => {
 			title: 'foo',
 			task: context => {
 				context.foo = 'bar';
-			}
+			},
 		},
 		{
 			title: 'unicorn',
 			task: context => {
 				t.is(context.foo, 'bar');
-			}
-		}
+			},
+		},
 	]);
 
 	const result = await list.run();
 
 	t.deepEqual(result, {
-		foo: 'bar'
+		foo: 'bar',
 	});
 });
 
@@ -161,31 +161,29 @@ test('subtask context', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => {
-				return new Listr([
-					{
-						title: 'subfoo',
-						task: context => {
-							t.is(context.foo, 'bar');
-							context.fiz = 'biz';
-						}
-					}
-				]);
-			}
+			task: () => new Listr([
+				{
+					title: 'subfoo',
+					task: context => {
+						t.is(context.foo, 'bar');
+						context.fiz = 'biz';
+					},
+				},
+			]),
 		},
 		{
 			title: 'bar',
 			task: context => {
 				t.is(context.fiz, 'biz');
-			}
-		}
+			},
+		},
 	]);
 
 	const result = await list.run({foo: 'bar'});
 
 	t.deepEqual(result, {
 		foo: 'bar',
-		fiz: 'biz'
+		fiz: 'biz',
 	});
 });
 
@@ -195,12 +193,12 @@ test('context is attached to error object', async t => {
 			title: 'foo',
 			task: context => {
 				context.foo = 'bar';
-			}
+			},
 		},
 		{
 			title: 'unicorn',
-			task: () => Promise.reject(new Error('foo bar'))
-		}
+			task: () => Promise.reject(new Error('foo bar')),
+		},
 	]);
 
 	try {
@@ -209,7 +207,7 @@ test('context is attached to error object', async t => {
 	} catch (error) {
 		t.is(error.message, 'foo bar');
 		t.deepEqual(error.context, {
-			foo: 'bar'
+			foo: 'bar',
 		});
 	}
 });

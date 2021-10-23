@@ -1,8 +1,8 @@
-const test = require('ava');
-const {Observable: RxObservable} = require('rxjs');
-const ZenObservable = require('zen-observable');
-const {isListr, isObservable} = require('../lib/utils');
-const Listr = require('..');
+import test from 'ava';
+import {Observable as RxObservable} from 'rxjs';
+import ZenObservable from 'zen-observable';
+import {isListr, isObservable} from '../lib/utils.js';
+import Listr from '../index.js';
 
 test('isListr', t => {
 	t.false(isListr(null));

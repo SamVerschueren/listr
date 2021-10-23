@@ -1,20 +1,18 @@
 name: Node
-
 on: [push, pull_request]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
-
+        node-version:
+          - 16
+          - 14
+          - 12
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install and test
@@ -25,3 +23,7 @@ jobs:
         npm test
       env:
         CI: true
+    - name: upload code coverage
+      uses: codecov/codecov-action@v2
+      with:
+        file: ./coverage/clover.xml

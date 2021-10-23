@@ -1,31 +1,31 @@
-const test = require('ava');
-const delay = require('delay');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import delay from 'delay';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 const tasks = [
 	{
 		title: 'P1',
-		task: () => delay(100)
+		task: () => delay(100),
 	},
 	{
 		title: 'P2',
-		task: () => delay(200)
+		task: () => delay(200),
 	},
 	{
 		title: 'P3',
-		task: () => delay(300)
+		task: () => delay(300),
 	},
 	{
 		title: 'P4',
-		task: () => delay(400)
-	}
+		task: () => delay(400),
+	},
 ];
 
 test.serial('run tasks sequentially if concurrency is undefined', async t => {
 	const list = new Listr(tasks, {
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -37,7 +37,7 @@ test.serial('run tasks sequentially if concurrency is undefined', async t => {
 		'P3 [completed]',
 		'P4 [started]',
 		'P4 [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -46,7 +46,7 @@ test.serial('run tasks sequentially if concurrency is undefined', async t => {
 test.serial('run tasks in parallel if concurrency is true', async t => {
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer,
-		concurrent: true
+		concurrent: true,
 	});
 
 	testOutput(t, [
@@ -58,7 +58,7 @@ test.serial('run tasks in parallel if concurrency is true', async t => {
 		'P2 [completed]',
 		'P3 [completed]',
 		'P4 [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -67,7 +67,7 @@ test.serial('run tasks in parallel if concurrency is true', async t => {
 test.serial('run tasks in sequential parallel chunks, if concurrency is a number', async t => {
 	const list = new Listr(tasks, {
 		renderer: SimpleRenderer,
-		concurrent: 2
+		concurrent: 2,
 	});
 
 	testOutput(t, [
@@ -79,7 +79,7 @@ test.serial('run tasks in sequential parallel chunks, if concurrency is a number
 		'P4 [started]',
 		'P3 [completed]',
 		'P4 [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();

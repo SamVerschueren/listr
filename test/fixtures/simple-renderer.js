@@ -1,17 +1,29 @@
-'use strict';
 
 const renderHelper = (task, event) => {
-	if (event.type === 'STATE') {
-		const state = task.isPending() ? 'started' : task.state;
-		console.log(`${task.title} [${state}]`);
+	switch (event.type) {
+		case 'STATE': {
+			const state = task.isPending() ? 'started' : task.state;
+			console.log(`${task.title} [${state}]`);
 
-		if (task.isSkipped() && task.output) {
-			console.log(`> ${task.output}`);
+			if (task.isSkipped() && task.output) {
+				console.log(`> ${task.output}`);
+			}
+
+			break;
 		}
-	} else if (event.type === 'DATA') {
-		console.log(`> ${event.data}`);
-	} else if (event.type === 'TITLE') {
-		console.log(`${task.title} [title changed]`);
+
+		case 'DATA': {
+			console.log(`> ${event.data}`);
+
+			break;
+		}
+
+		case 'TITLE': {
+			console.log(`${task.title} [title changed]`);
+
+			break;
+		}
+	// No default
 	}
 };
 
@@ -26,9 +38,9 @@ const render = tasks => {
 
 				renderHelper(task, event);
 			},
-			err => {
-				console.log(err);
-			}
+			error => {
+				console.log(error);
+			},
 		);
 	}
 };
@@ -51,4 +63,4 @@ class SimpleRenderer {
 	}
 }
 
-module.exports = SimpleRenderer;
+export default SimpleRenderer;

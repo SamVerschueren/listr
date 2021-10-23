@@ -1,24 +1,25 @@
-const fs = require('fs');
-const path = require('path');
-const test = require('ava');
-const split = require('split');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import test from 'ava';
+import split from 'split';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('output', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => {
-				return new Listr([
-					{
-						title: 'bar',
-						task: () => fs.createReadStream(path.join(__dirname, 'fixtures/data.txt'), 'utf8').pipe(split(/\r?\n/, null, {trailing: false}))
-					}
-				]);
-			}
-		}
+			task: () => new Listr([
+				{
+					title: 'bar',
+					task: () => fs.createReadStream(path.join(__dirname, 'fixtures/data.txt'), 'utf8').pipe(split(/\r?\n/, null, {trailing: false})),
+				},
+			]),
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
@@ -28,7 +29,7 @@ test('output', async t => {
 		'> bar',
 		'bar [completed]',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();

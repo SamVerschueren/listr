@@ -1,7 +1,7 @@
-const test = require('ava');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 test('continue execution if skip() returns false or Promise for false', async t => {
 	t.plan(5); // Verify the correct number of tasks were executed
@@ -12,28 +12,28 @@ test('continue execution if skip() returns false or Promise for false', async t 
 			task: () => new Listr([
 				{
 					title: 'Task 1.1',
-					task: () => t.pass()
+					task: () => t.pass(),
 				},
 				{
 					title: 'Task 1.2',
 					skip: () => false,
-					task: () => t.pass()
+					task: () => t.pass(),
 				},
 				{
 					title: 'Task 1.3',
-					task: () => t.pass()
-				}
-			])
+					task: () => t.pass(),
+				},
+			]),
 		},
 		{
 			title: 'Task 2',
 			skip: () => Promise.resolve(false),
-			task: () => t.pass()
+			task: () => t.pass(),
 		},
 		{
 			title: 'Task 3',
-			task: () => t.pass()
-		}
+			task: () => t.pass(),
+		},
 	], {renderer: 'silent'});
 
 	await list.run();
@@ -48,28 +48,28 @@ test('skip task if skip() returns true or Promise for true', async t => {
 			task: () => new Listr([
 				{
 					title: 'Task 1.1',
-					task: () => t.pass()
+					task: () => t.pass(),
 				},
 				{
 					title: 'Task 1.2',
 					skip: () => true,
-					task: () => t.fail('Skipped task should not be executed')
+					task: () => t.fail('Skipped task should not be executed'),
 				},
 				{
 					title: 'Task 1.3',
-					task: () => t.pass()
-				}
-			])
+					task: () => t.pass(),
+				},
+			]),
 		},
 		{
 			title: 'Task 2',
 			skip: () => Promise.resolve(true),
-			task: () => t.fail('Skipped task should not be executed')
+			task: () => t.fail('Skipped task should not be executed'),
 		},
 		{
 			title: 'Task 3',
-			task: () => t.pass()
-		}
+			task: () => t.pass(),
+		},
 	], {renderer: 'silent'});
 
 	await list.run();
@@ -84,28 +84,28 @@ test('skip task with custom reason if skip() returns string or Promise for strin
 			task: () => new Listr([
 				{
 					title: 'Task 1.1',
-					task: () => t.pass()
+					task: () => t.pass(),
 				},
 				{
 					title: 'Task 1.2',
 					skip: () => 'skip',
-					task: () => t.fail('Skipped task should not be executed')
+					task: () => t.fail('Skipped task should not be executed'),
 				},
 				{
 					title: 'Task 1.3',
-					task: () => t.pass()
-				}
-			])
+					task: () => t.pass(),
+				},
+			]),
 		},
 		{
 			title: 'Task 2',
 			skip: () => Promise.resolve('skip'),
-			task: () => t.fail('Skipped task should not be executed')
+			task: () => t.fail('Skipped task should not be executed'),
 		},
 		{
 			title: 'Task 3',
-			task: () => t.pass()
-		}
+			task: () => t.pass(),
+		},
 	], {renderer: 'silent'});
 
 	await list.run();
@@ -116,15 +116,15 @@ test.serial('skip rendering', async t => {
 		{
 			title: 'foo',
 			skip: () => 'foo bar',
-			task: () => Promise.resolve('bar')
-		}
+			task: () => Promise.resolve('bar'),
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo [skipped]',
 		'> foo bar',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -136,7 +136,7 @@ test('skip context object', async t => {
 			title: 'foo',
 			task: ctx => {
 				ctx.foo = 'bar';
-			}
+			},
 		},
 		{
 			title: 'bar',
@@ -145,8 +145,8 @@ test('skip context object', async t => {
 			},
 			task: ctx => {
 				t.is(ctx.foo, 'bar');
-			}
-		}
+			},
+		},
 	]);
 
 	await list.run();

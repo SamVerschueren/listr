@@ -1,9 +1,8 @@
-'use strict';
-const pMap = require('p-map');
-const Task = require('./lib/task');
-const TaskWrapper = require('./lib/task-wrapper');
-const renderer = require('./lib/renderer');
-const ListrError = require('./lib/listr-error');
+import pMap from 'p-map';
+import Task from './lib/task.js';
+import TaskWrapper from './lib/task-wrapper.js';
+import {getRenderer} from './lib/renderer.js';
+import ListrError from './lib/listr-error.js';
 
 const runTask = (task, context, errors) => {
 	if (!task.isEnabled()) {
@@ -33,18 +32,18 @@ class Listr {
 			concurrent: false,
 			renderer: 'default',
 			nonTTYRenderer: 'verbose',
-			...options
+			...options,
 		};
 		this._tasks = [];
 
 		this.concurrency = 1;
 		if (this._options.concurrent === true) {
-			this.concurrency = Infinity;
+			this.concurrency = Number.POSITIVE_INFINITY;
 		} else if (typeof this._options.concurrent === 'number') {
 			this.concurrency = this._options.concurrent;
 		}
 
-		this._RendererClass = renderer.getRenderer(this._options.renderer, this._options.nonTTYRenderer);
+		this._RendererClass = getRenderer(this._options.renderer, this._options.nonTTYRenderer);
 
 		this.exitOnError = this._options.exitOnError;
 
@@ -62,7 +61,7 @@ class Listr {
 	}
 
 	setRenderer(value) {
-		this._RendererClass = renderer.getRenderer(value);
+		this._RendererClass = getRenderer(value);
 	}
 
 	add(task) {
@@ -100,9 +99,9 @@ class Listr {
 		return tasks
 			.then(() => {
 				if (errors.length > 0) {
-					const err = new ListrError('Something went wrong');
-					err.errors = errors;
-					throw err;
+					const error = new ListrError('Something went wrong');
+					error.errors = errors;
+					throw error;
 				}
 
 				this._renderer.end();
@@ -117,4 +116,4 @@ class Listr {
 	}
 }
 
-module.exports = Listr;
+export default Listr;

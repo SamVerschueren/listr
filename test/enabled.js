@@ -1,27 +1,27 @@
-const test = require('ava');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 test.serial('do not run disabled tasks', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.resolve()
+			task: () => Promise.resolve(),
 		},
 		{
 			title: 'bar',
 			enabled: ctx => ctx.run === true,
-			task: () => Promise.resolve()
-		}
+			task: () => Promise.resolve(),
+		},
 	], {
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -36,15 +36,15 @@ test.serial('run enabled task', async t => {
 					task.skip('It failed');
 
 					ctx.failed = true;
-				})
+				}),
 		},
 		{
 			title: 'bar',
 			enabled: ctx => ctx.failed === true,
-			task: () => Promise.resolve()
-		}
+			task: () => Promise.resolve(),
+		},
 	], {
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -53,7 +53,7 @@ test.serial('run enabled task', async t => {
 		'> It failed',
 		'bar [started]',
 		'bar [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
