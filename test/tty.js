@@ -1,9 +1,10 @@
-const test = require('ava');
-const {Observable} = require('rxjs');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const TTYRenderer = require('./fixtures/tty-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import process from 'node:process';
+import test from 'ava';
+import {Observable} from 'rxjs';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import TTYRenderer from './fixtures/tty-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 const ttyOutput = [
 	'foo [started]',
@@ -12,7 +13,7 @@ const ttyOutput = [
 	'> bar',
 	'bar [completed]',
 	'foo [completed]',
-	'tty done'
+	'tty done',
 ];
 
 const nonTTYOutput = [
@@ -22,31 +23,27 @@ const nonTTYOutput = [
 	'> bar',
 	'bar [completed]',
 	'foo [completed]',
-	'done'
+	'done',
 ];
 
 test('output', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => {
-				return new Listr([
-					{
-						title: 'bar',
-						task: () => {
-							return new Observable(observer => {
-								observer.next('foo');
-								observer.next('bar');
-								observer.complete();
-							});
-						}
-					}
-				]);
-			}
-		}
+			task: () => new Listr([
+				{
+					title: 'bar',
+					task: () => new Observable(observer => {
+						observer.next('foo');
+						observer.next('bar');
+						observer.complete();
+					}),
+				},
+			]),
+		},
 	], {
 		renderer: TTYRenderer,
-		nonTTYRenderer: SimpleRenderer
+		nonTTYRenderer: SimpleRenderer,
 	});
 
 	testOutput(t, process.stdout.isTTY ? ttyOutput : nonTTYOutput);

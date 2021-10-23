@@ -1,31 +1,31 @@
-const test = require('ava');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 const tasks = [
 	{
 		title: 'foo',
-		task: () => Promise.reject(new Error('Something went wrong'))
+		task: () => Promise.reject(new Error('Something went wrong')),
 	},
 	{
 		title: 'bar',
-		task: () => Promise.resolve()
-	}
+		task: () => Promise.resolve(),
+	},
 ];
 
 test.serial('exit on error', async t => {
 	t.plan(5);
 
 	const list = new Listr(tasks, {
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo [failed]',
 		'> Something went wrong',
-		'done'
+		'done',
 	]);
 
 	try {
@@ -40,7 +40,7 @@ test.serial('set `exitOnError` to false', async t => {
 
 	const list = new Listr(tasks, {
 		exitOnError: false,
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -49,7 +49,7 @@ test.serial('set `exitOnError` to false', async t => {
 		'> Something went wrong',
 		'bar [started]',
 		'bar [completed]',
-		'done'
+		'done',
 	]);
 
 	try {
@@ -66,31 +66,29 @@ test.serial('set `exitOnError` to false in nested list', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.resolve()
+			task: () => Promise.resolve(),
 		},
 		{
 			title: 'bar',
-			task: () => {
-				return new Listr([
-					{
-						title: 'unicorn',
-						task: () => Promise.reject(new Error('Unicorn failed'))
-					},
-					{
-						title: 'rainbow',
-						task: () => Promise.resolve()
-					}
-				], {
-					exitOnError: false
-				});
-			}
+			task: () => new Listr([
+				{
+					title: 'unicorn',
+					task: () => Promise.reject(new Error('Unicorn failed')),
+				},
+				{
+					title: 'rainbow',
+					task: () => Promise.resolve(),
+				},
+			], {
+				exitOnError: false,
+			}),
 		},
 		{
 			title: 'baz',
-			task: () => Promise.resolve()
-		}
+			task: () => Promise.resolve(),
+		},
 	], {
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -105,7 +103,7 @@ test.serial('set `exitOnError` to false in nested list', async t => {
 		'bar [failed]',
 		'baz [started]',
 		'baz [completed]',
-		'done'
+		'done',
 	]);
 
 	try {
@@ -123,30 +121,28 @@ test.serial('set `exitOnError` to false in root', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('Foo failed'))
+			task: () => Promise.reject(new Error('Foo failed')),
 		},
 		{
 			title: 'bar',
-			task: () => {
-				return new Listr([
-					{
-						title: 'unicorn',
-						task: () => Promise.reject(new Error('Unicorn failed'))
-					},
-					{
-						title: 'rainbow',
-						task: () => Promise.resolve()
-					}
-				]);
-			}
+			task: () => new Listr([
+				{
+					title: 'unicorn',
+					task: () => Promise.reject(new Error('Unicorn failed')),
+				},
+				{
+					title: 'rainbow',
+					task: () => Promise.resolve(),
+				},
+			]),
 		},
 		{
 			title: 'baz',
-			task: () => Promise.resolve()
-		}
+			task: () => Promise.resolve(),
+		},
 	], {
 		exitOnError: false,
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -162,7 +158,7 @@ test.serial('set `exitOnError` to false in root', async t => {
 		'bar [failed]',
 		'baz [started]',
 		'baz [completed]',
-		'done'
+		'done',
 	]);
 
 	try {
@@ -181,32 +177,30 @@ test.serial('set `exitOnError` to false in root and true in child', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('Foo failed'))
+			task: () => Promise.reject(new Error('Foo failed')),
 		},
 		{
 			title: 'bar',
-			task: () => {
-				return new Listr([
-					{
-						title: 'unicorn',
-						task: () => Promise.reject(new Error('Unicorn failed'))
-					},
-					{
-						title: 'rainbow',
-						task: () => Promise.resolve()
-					}
-				], {
-					exitOnError: true
-				});
-			}
+			task: () => new Listr([
+				{
+					title: 'unicorn',
+					task: () => Promise.reject(new Error('Unicorn failed')),
+				},
+				{
+					title: 'rainbow',
+					task: () => Promise.resolve(),
+				},
+			], {
+				exitOnError: true,
+			}),
 		},
 		{
 			title: 'baz',
-			task: () => Promise.resolve()
-		}
+			task: () => Promise.resolve(),
+		},
 	], {
 		exitOnError: false,
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -221,7 +215,7 @@ test.serial('set `exitOnError` to false in root and true in child', async t => {
 		'> Unicorn failed',
 		'baz [started]',
 		'baz [completed]',
-		'done'
+		'done',
 	]);
 
 	try {
@@ -240,17 +234,17 @@ test.serial('exit on error throws error object with context', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => Promise.reject(new Error('Foo failed'))
+			task: () => Promise.reject(new Error('Foo failed')),
 		},
 		{
 			title: 'bar',
 			task: ctx => {
 				ctx.foo = 'bar';
-			}
-		}
+			},
+		},
 	], {
 		exitOnError: false,
-		renderer: SimpleRenderer
+		renderer: SimpleRenderer,
 	});
 
 	testOutput(t, [
@@ -259,7 +253,7 @@ test.serial('exit on error throws error object with context', async t => {
 		'> Foo failed',
 		'bar [started]',
 		'bar [completed]',
-		'done'
+		'done',
 	]);
 
 	try {

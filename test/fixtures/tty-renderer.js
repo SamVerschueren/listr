@@ -1,5 +1,4 @@
-'use strict';
-const SimpleRenderer = require('./simple-renderer');
+import SimpleRenderer from './simple-renderer.js';
 
 class TTYRenderer extends SimpleRenderer {
 	static get nonTTY() {
@@ -11,4 +10,4 @@ class TTYRenderer extends SimpleRenderer {
 	}
 }
 
-module.exports = TTYRenderer;
+export default TTYRenderer;

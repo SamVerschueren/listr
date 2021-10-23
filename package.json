@@ -7,13 +7,15 @@
 	"author": {
 		"name": "Sam Verschueren",
 		"email": "sam.verschueren@gmail.com",
-		"url": "github.com/SamVerschueren"
+		"url": "https://github.com/SamVerschueren"
 	},
+	"type": "module",
+	"exports": "./index.js",
 	"engines": {
-		"node": ">=10"
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
 	},
 	"scripts": {
-		"test": "clinton && xo && nyc ava",
+		"test": "xo && c8 -r clover -r text ava",
 		"lint:staged": "lint-staged"
 	},
 	"files": [
@@ -38,29 +40,27 @@
 		"idle"
 	],
 	"dependencies": {
-		"@samverschueren/stream-to-observable": "^0.3.0",
-		"is-observable": "^2.0.0",
-		"is-promise": "^2.1.0",
-		"is-stream": "^1.1.0",
+		"@samverschueren/stream-to-observable": "^0.3.1",
+		"is-observable": "^2.1.0",
+		"is-promise": "^4.0.0",
+		"is-stream": "^3.0.0",
 		"listr-silent-renderer": "^1.1.1",
 		"listr-update-renderer": "^0.5.0",
 		"listr-verbose-renderer": "^0.6.0",
-		"p-map": "^2.0.0",
+		"p-map": "^5.1.0",
 		"rxjs": "^6.3.3"
 	},
 	"devDependencies": {
-		"ava": "*",
-		"clinton": "*",
-		"codecov": "^3.1.0",
+		"ava": "^3.15.0",
+		"c8": "^7.10.0",
 		"delay": "^4.1.0",
-		"hook-std": "^1.1.0",
-		"lint-staged": "^8.0.5",
-		"log-symbols": "^2.2.0",
-		"nyc": "^13.1.0",
+		"hook-std": "^3.0.0",
+		"lint-staged": "^11.2.3",
+		"log-symbols": "^5.0.0",
 		"pre-commit": "^1.2.2",
 		"split": "^1.0.1",
-		"xo": "*",
-		"zen-observable": "^0.8.11"
+		"xo": "^0.45.0",
+		"zen-observable": "^0.8.15"
 	},
 	"lint-staged": {
 		"*.js": "xo"

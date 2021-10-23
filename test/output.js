@@ -1,28 +1,24 @@
-const test = require('ava');
-const {Observable} = require('rxjs');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import {Observable} from 'rxjs';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 test('output', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => {
-				return new Listr([
-					{
-						title: 'bar',
-						task: () => {
-							return new Observable(observer => {
-								observer.next('foo');
-								observer.next('bar');
-								observer.complete();
-							});
-						}
-					}
-				]);
-			}
-		}
+			task: () => new Listr([
+				{
+					title: 'bar',
+					task: () => new Observable(observer => {
+						observer.next('foo');
+						observer.next('bar');
+						observer.complete();
+					}),
+				},
+			]),
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
@@ -32,7 +28,7 @@ test('output', async t => {
 		'> bar',
 		'bar [completed]',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();

@@ -1,21 +1,19 @@
-const test = require('ava');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 test('renderer class', async t => {
 	const list = new Listr([
 		{
 			title: 'foo',
-			task: () => {
-				return new Listr([
-					{
-						title: 'bar',
-						task: () => { }
-					}
-				]);
-			}
-		}
+			task: () => new Listr([
+				{
+					title: 'bar',
+					task: () => {},
+				},
+			]),
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
@@ -23,7 +21,7 @@ test('renderer class', async t => {
 		'bar [started]',
 		'bar [completed]',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();

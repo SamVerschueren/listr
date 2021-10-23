@@ -1,7 +1,7 @@
-const test = require('ava');
-const SimpleRenderer = require('./fixtures/simple-renderer');
-const {testOutput} = require('./fixtures/utils');
-const Listr = require('..');
+import test from 'ava';
+import Listr from '../index.js';
+import SimpleRenderer from './fixtures/simple-renderer.js';
+import {testOutput} from './fixtures/utils.js';
 
 test.serial('changing the title during task execution', async t => {
 	const list = new Listr([
@@ -9,15 +9,15 @@ test.serial('changing the title during task execution', async t => {
 			title: 'foo',
 			task: (ctx, task) => {
 				task.title = 'foo bar';
-			}
-		}
+			},
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo bar [title changed]',
 		'foo bar [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -29,15 +29,15 @@ test.serial('changing the output during task execution', async t => {
 			title: 'foo',
 			task: (ctx, task) => {
 				task.output = 'some output';
-			}
-		}
+			},
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
 		'foo [started]',
 		'> some output',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -49,14 +49,14 @@ test.serial('skip task during task execution with no message', async t => {
 			title: 'foo',
 			task: (ctx, task) => {
 				task.skip();
-			}
-		}
+			},
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo [skipped]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -68,15 +68,15 @@ test.serial('skip task during task execution with message', async t => {
 			title: 'foo',
 			task: (ctx, task) => {
 				task.skip('foo bar');
-			}
-		}
+			},
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
 		'foo [started]',
 		'foo [skipped]',
 		'> foo bar',
-		'done'
+		'done',
 	]);
 
 	await list.run();
@@ -91,10 +91,10 @@ test.serial('skip subtask', async t => {
 					title: 'bar',
 					task: (ctx, task) => {
 						task.skip('foo bar');
-					}
-				}
-			], {renderer: SimpleRenderer})
-		}
+					},
+				},
+			], {renderer: SimpleRenderer}),
+		},
 	], {renderer: SimpleRenderer});
 
 	testOutput(t, [
@@ -103,7 +103,7 @@ test.serial('skip subtask', async t => {
 		'bar [skipped]',
 		'> foo bar',
 		'foo [completed]',
-		'done'
+		'done',
 	]);
 
 	await list.run();
