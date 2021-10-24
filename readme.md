@@ -17,8 +17,8 @@ $ npm install --save listr
 ## Usage
 
 ```js
-const execa = require('execa');
-const Listr = require('listr');
+import execa from 'execa';
+import Listr from 'listr';
 
 const tasks = new Listr([
 	{
@@ -121,7 +121,7 @@ A `task` can also return an `Observable`. The thing about observables is that it
 task. Please note that only the last line of the output is rendered.
 
 ```js
-const {Observable} = require('rxjs');
+import {Observable} from 'rxjs';
 
 const tasks = new Listr([
 	{
@@ -154,8 +154,8 @@ You can use the `Observable` package you feel most comfortable with, like [RxJS]
 It's also possible to return a [`ReadableStream`](https://nodejs.org/api/stream.html#stream_class_stream_readable). The stream will be converted to an `Observable` and handled as such.
 
 ```js
-const fs = require('fs');
-const split = require('split');
+import fs from 'fs';
+import split from 'split';
 
 const list = new Listr([
 	{
