@@ -1,80 +1,80 @@
 {
-	"name": "listr",
-	"version": "0.14.3",
-	"description": "Terminal task list",
-	"license": "MIT",
-	"repository": "SamVerschueren/listr",
-	"author": {
-		"name": "Sam Verschueren",
-		"email": "sam.verschueren@gmail.com",
-		"url": "https://github.com/SamVerschueren"
-	},
-	"type": "module",
-	"exports": "./index.js",
-	"engines": {
-		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-	},
-	"scripts": {
-		"test": "xo && c8 -r clover -r text ava",
-		"lint:staged": "lint-staged"
-	},
-	"files": [
-		"index.js",
-		"lib"
-	],
-	"keywords": [
-		"cli",
-		"task",
-		"list",
-		"tasklist",
-		"terminal",
-		"term",
-		"console",
-		"ascii",
-		"unicode",
-		"loading",
-		"indicator",
-		"progress",
-		"busy",
-		"wait",
-		"idle"
-	],
-	"dependencies": {
-		"@samverschueren/stream-to-observable": "^0.3.1",
-		"is-observable": "^2.1.0",
-		"is-promise": "^4.0.0",
-		"is-stream": "^3.0.0",
-		"listr-silent-renderer": "^1.1.1",
-		"listr-update-renderer": "^0.5.0",
-		"listr-verbose-renderer": "^0.6.0",
-		"p-map": "^5.1.0",
-		"rxjs": "^6.3.3"
-	},
-	"devDependencies": {
-		"ava": "^3.15.0",
-		"c8": "^7.10.0",
-		"delay": "^4.1.0",
-		"hook-std": "^3.0.0",
-		"lint-staged": "^11.2.3",
-		"log-symbols": "^5.0.0",
-		"pre-commit": "^1.2.2",
-		"split": "^1.0.1",
-		"xo": "^0.45.0",
-		"zen-observable": "^0.8.15"
-	},
-	"lint-staged": {
-		"*.js": "xo"
-	},
-	"pre-commit": "lint:staged",
-	"xo": {
-		"rules": {
-			"prefer-destructuring": "off",
-			"promise/prefer-await-to-then": "off"
-		}
-	},
-	"ava": {
-		"files": [
-			"!test/fixtures"
-		]
-	}
+ "name": "listr",
+ "version": "0.14.3",
+ "description": "Terminal task list",
+ "license": "MIT",
+ "repository": "SamVerschueren/listr",
+ "author": {
+  "name": "Sam Verschueren",
+  "email": "sam.verschueren@gmail.com",
+  "url": "https://github.com/SamVerschueren"
+ },
+ "type": "module",
+ "exports": "./index.js",
+ "engines": {
+  "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+ },
+ "scripts": {
+  "test": "xo && c8 -r clover -r text ava",
+  "lint:staged": "lint-staged"
+ },
+ "files": [
+  "index.js",
+  "lib"
+ ],
+ "keywords": [
+  "cli",
+  "task",
+  "list",
+  "tasklist",
+  "terminal",
+  "term",
+  "console",
+  "ascii",
+  "unicode",
+  "loading",
+  "indicator",
+  "progress",
+  "busy",
+  "wait",
+  "idle"
+ ],
+ "dependencies": {
+  "@samverschueren/stream-to-observable": "^0.3.1",
+  "is-observable": "^2.1.0",
+  "is-promise": "^4.0.0",
+  "is-stream": "^3.0.0",
+  "listr-silent-renderer": "^1.1.1",
+  "listr-update-renderer": "^0.5.0",
+  "listr-verbose-renderer": "^0.6.0",
+  "p-map": "^5.1.0",
+  "rxjs": "^7.0.0"
+ },
+ "devDependencies": {
+  "ava": "^3.15.0",
+  "c8": "^7.10.0",
+  "delay": "^4.1.0",
+  "hook-std": "^3.0.0",
+  "lint-staged": "^11.2.3",
+  "log-symbols": "^5.0.0",
+  "pre-commit": "^1.2.2",
+  "split": "^1.0.1",
+  "xo": "^0.45.0",
+  "zen-observable": "^0.8.15"
+ },
+ "lint-staged": {
+  "*.js": "xo"
+ },
+ "pre-commit": "lint:staged",
+ "xo": {
+  "rules": {
+   "prefer-destructuring": "off",
+   "promise/prefer-await-to-then": "off"
+  }
+ },
+ "ava": {
+  "files": [
+   "!test/fixtures"
+  ]
+ }
 }
