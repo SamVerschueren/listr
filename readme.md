@@ -17,7 +17,7 @@ $ npm install --save listr
 ## Usage
 
 ```js
-import execa from 'execa';
+import {execa} from 'execa';
 import Listr from 'listr';
 
 const tasks = new Listr([
@@ -27,16 +27,16 @@ const tasks = new Listr([
 			return new Listr([
 				{
 					title: 'Checking git status',
-					task: () => execa.stdout('git', ['status', '--porcelain']).then(result => {
-						if (result !== '') {
+					task: () => execa('git', ['status', '--porcelain']).then(result => {
+						if (result.stdout !== '') {
 							throw new Error('Unclean working tree. Commit or stash changes first.');
 						}
 					})
 				},
 				{
 					title: 'Checking remote history',
-					task: () => execa.stdout('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD']).then(result => {
-						if (result !== '0') {
+					task: () => execa('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD']).then(result => {
+						if (result.stdout !== '0') {
 							throw new Error('Remote history differ. Please pull changes.');
 						}
 					})
